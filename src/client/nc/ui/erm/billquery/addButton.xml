@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 1、扩展审核按钮 -->
+	<bean id="listViewActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="listView" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="addaction" />
+				<ref bean="editaction" />
+				<ref bean="deleteaction" />
+				<ref bean="copyaction"/>
+
+				<ref bean="nullAction" />
+				<ref bean="queryAction" />
+				<ref bean="listRefreshAction" />
+
+				<ref bean="nullAction" />
+				<ref bean="billTypeaction" />
+
+				<ref bean="nullAction"/>
+				<ref bean="documentaction"/>
+				<!--ref bean="assistantAction"/-->
+
+				<ref bean="nullAction"/>
+				<ref bean="linkbxbillaction"/>
+
+				<ref bean="nullAction"/>
+				<ref bean="listprintGroup"/>
+				<!-- 新增按钮 -->
+				<ref bean="queryAction1"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="queryAction1" class="nc.ui.erm.billpub.action.ErmBillQueryAction">
+		<property name="model" ref="manageAppModel" />
+		<property name="dataManager" ref="modelDataManager" />
+	</bean>
+</beans>

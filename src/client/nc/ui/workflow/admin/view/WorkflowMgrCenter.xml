@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<!-- 环境变量 -->
+	<bean id="context" class="nc.vo.uif2.LoginContext">
+	</bean>
+
+	<!-- 模板容器 -->
+	<bean id="templateContainer" class="nc.ui.uif2.editor.TemplateContainer"
+		init-method="load">
+		<property name="context">
+			<ref bean="context" />
+		</property>
+		<property name="nodeKeies">
+			<list>
+				<value>worknote</value>
+				<value>flowinstance</value>
+			</list>
+		</property>
+	</bean>
+	<!-- worknote查询用到的查询模板nodeKey -->
+	<bean id="queryTemplateContainer" class="nc.ui.uif2.editor.QueryTemplateContainer">
+		<property name="context">
+			<ref bean="context" />
+		</property>
+		<property name="nodeKey">
+			<value>worknote_query</value>
+		</property>
+	</bean>
+	<!-- flowinstance查询用到的查询模板nodeKey -->
+	<bean id="flowinstqueryTemplateContainer" class="nc.ui.uif2.editor.QueryTemplateContainer">
+		<property name="context">
+			<ref bean="context" />
+		</property>
+		<property name="nodeKey">
+			<value>flowinstance_query</value>
+		</property>
+	</bean>
+	<bean id="remoteCallCombinatorCaller" class="nc.ui.uif2.editor.UIF2RemoteCallCombinatorCaller">
+		<property name="remoteCallers">
+			<list>
+				<ref bean="templateContainer" />
+				<ref bean="queryTemplateContainer" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 应用服务类，负责进行模型操作的处理 -->
+	<bean id="worknoteSerivce" class="nc.ui.workflow.admin.service.WorknoteService"></bean>
+	<bean id="flowinstSerivce" class="nc.ui.workflow.admin.service.FlowInstanceService" />
+
+	<!-- 模型部分配置########################################################### -->
+
+	<!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
+	<bean id="boadaptorfacotry" class="nc.vo.bd.meta.GeneralBDObjectAdapterFactory">
+		<property name="mode" value="MD"></property>
+	</bean>
+
+
+	<!-- worknote操作应用模型 -->
+	<bean id="worknoteAppModel" class="nc.ui.workflow.admin.model.WorknoteAppModel">
+		<property name="context" ref="context"></property>
+		<property name="service" ref="worknoteSerivce"></property>
+		<property name="businessObjectAdapterFactory" ref="boadatorfactory"></property>
+	</bean>
+	<!-- flowinstance操作应用模型 -->
+	<bean id="flowinstAppModel" class="nc.ui.uif2.model.BillManageModel">
+		<property name="context" ref="context"></property>
+		<property name="service" ref="flowinstSerivce"></property>
+		<property name="businessObjectAdapterFactory" ref="boadaptorfacotry"></property>
+	</bean>
+
+	<!-- 数据模型管理器-worknote -->
+	<bean id="modelDataManager" class="nc.ui.workflow.admin.model.WorknoteModelDataManager">
+		<property name="worknoteModel" ref="worknoteAppModel"></property>
+		<property name="paginationModel" ref="paginationModel"></property>
+		<property name="paginationDelegator" ref="paginationDelegator"></property>
+	</bean>
+
+	<!-- 数据模型管理器-flowinstance -->
+	<bean id="flowinstmodelDataManager" class="nc.ui.workflow.admin.model.FlowInstanceModelDataManager">
+		<property name="flowInstanceAppModel" ref="flowinstAppModel"></property>
+		<property name="paginationModel" ref="instPaginationModel"></property>
+		<property name="paginationDelegator" ref="instPaginationDelegator"></property>
+	</bean>
+	<!-- 分页model -->
+	<bean id="paginationModel" class="nc.ui.uif2.components.pagination.PaginationModel"
+		init-method="init">
+	</bean>
+	<!-- 分页model -->
+	<bean id="paginationDelegator"
+		class="nc.ui.uif2.components.pagination.BillManagePaginationDelegator">
+		<constructor-arg>
+			<ref bean="worknoteAppModel" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="paginationModel" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="instPaginationModel" class="nc.ui.uif2.components.pagination.PaginationModel"
+		init-method="init">
+	</bean>
+
+	<bean id="instPaginationDelegator"
+		class="nc.ui.uif2.components.pagination.BillManagePaginationDelegator">
+		<constructor-arg>
+			<ref bean="flowinstAppModel" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="instPaginationModel" />
+		</constructor-arg>
+	</bean>
+	<!-- 分页状态栏 -->
+	<bean id="paginationBar" class="nc.ui.uif2.components.pagination.PaginationBar"
+		init-method="registeCallbak">
+		<property name="paginationModel" ref="paginationModel"></property>
+		<property name="context" ref="context"></property>
+	</bean>
+	<!-- 分页状态栏 -->
+	<bean id="instPaginationBar" class="nc.ui.uif2.components.pagination.PaginationBar"
+		init-method="registeCallbak">
+		<property name="paginationModel" ref="instPaginationModel"></property>
+		<property name="context" ref="context"></property>
+	</bean>
+
+	<!-- 数据初始化监听器 -->
+	<bean id="InitDataListener" class="nc.ui.workflow.admin.model.WorkflowInitDataListener">
+		<property name="flowinstModelDataManager" ref="flowinstmodelDataManager" />
+		<property name="worknoteModelDataManager" ref="modelDataManager" />
+		<property name="flowinstQryAction" ref="flowinstqryAction" />
+		<property name="worknoteQryAction" ref="worknoteqryAction" />
+		<property name="flowinstAppModel" ref="flowinstAppModel" />
+		<property name="worknoteAppModel" ref="worknoteAppModel" />
+	</bean>
+
+	<bean id="worknoteListView" class="nc.ui.workflow.admin.view.WorknoteListView"
+		init-method="initUI">
+		<property name="model" ref="worknoteAppModel"></property>
+		<property name="multiSelectionEnable">
+			<value>true</value>
+		</property>
+		<property name="nodekey">
+			<value>worknote</value>
+		</property>
+		<property name="pos">
+			<value>head</value>
+		</property>
+		<property name="south" ref="paginationBar"></property>
+		<property name="templateContainer" ref="templateContainer"></property>
+	</bean>
+
+	<bean id="flowinstListView" class="nc.ui.workflow.admin.view.FlowInstanceListView"
+		init-method="initUI">
+		<property name="model" ref="flowinstAppModel"></property>
+		<property name="multiSelectionEnable">
+			<value>false</value>
+		</property>
+		<property name="nodekey">
+			<value>flowinstance</value>
+		</property>
+		<property name="pos">
+			<value>head</value>
+		</property>
+		<property name="south" ref="instPaginationBar"></property>
+		<property name="templateContainer" ref="templateContainer"></property>
+	</bean>
+
+	<!-- 分隔条 -->
+	<bean id="seperateaction" class="nc.funcnode.ui.action.SeparatorAction">
+	</bean>
+	<!-- 默認查詢條件獲得器 -->
+	<!-- <bean id="queryDelegator" class = "nc.ui.uif2.actions.DefaultQueryDelegator"> -->
+	<!-- <property name="context"><ref bean="context" /></property> -->
+	<!-- <property name="nodeKey"><value>worknote_query</value></property> -->
+	<!-- </bean> -->
+	<!-- 对象转换器工厂，由此获取操作对象的特征信息 -->
+	<bean id="boadatorfactory" class="nc.vo.bd.meta.BDObjectAdpaterFactory" />
+
+
+	<!-- 界面布局总装################################################################ -->
+	<bean id="container" class="nc.ui.uif2.TangramContainer"
+		init-method="initUI">
+		<property name="tangramLayoutRoot">
+			<bean class="nc.ui.uif2.tangramlayout.node.TBNode">
+				<property name="tabs">
+					<list>
+						<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+							<property name="component">
+								<ref bean="worknoteListView" />
+							</property>
+						</bean>
+						<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+							<property name="component">
+								<ref bean="flowinstListView" />
+							</property>
+						</bean>
+					</list>
+				</property>
+				<property name="showMode" value="CardLayout"></property>
+			</bean>
+		</property>
+		<property name="model" ref="worknoteAppModel" />
+	</bean>
+
+	<!-- 页签按钮管理 -->
+	<bean id="toftpanelActionContributors" class="nc.ui.uif2.actions.ActionContributors">
+		<property name="contributors">
+			<list>
+				<ref bean="actionsOfWorknote" />
+				<ref bean="actionsOfFlowinst" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 工作项显示下的按钮 -->
+	<bean id="actionsOfWorknote" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg ref="worknoteListView" />
+		<property name="model" ref="worknoteAppModel" />
+		<property name="actions">
+			<list>
+				<ref bean="separatorAction" />
+				<ref bean="queryMenu" />
+				<ref bean="separatorAction" />
+				<ref bean="billInfoAction" />
+				<ref bean="flowInfoAction" />
+				<ref bean="separatorAction" />
+				<ref bean="worknoteToolMenu" />
+				<ref bean="separatorAction" />
+				<ref bean="refreshAction" />
+				<ref bean="separatorAction" />
+				<ref bean="deleteAction" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 流程实例显示下的按钮 -->
+	<bean id="actionsOfFlowinst" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg ref="flowinstListView" />
+		<property name="model" ref="flowinstAppModel" />
+		<!-- 此处配置的Action浏览态始终可见 -->
+		<property name="actions">
+			<list>
+				<ref bean="separatorAction" />
+				<ref bean="queryMenu" />
+				<ref bean="separatorAction" />
+				<ref bean="instBillInfoAction" />
+				<ref bean="instFlowInfoAction" />
+				<ref bean="separatorAction" />
+				<ref bean="flowinstToolMenu" />
+				<ref bean="separatorAction" />
+				<ref bean="instRefreshAction" />
+				<ref bean="separatorAction" />
+				<ref bean="deleteAction" />
+				
+			</list>
+		</property>
+	</bean>
+	<!-- 查询按钮组 -->
+	<bean id="queryMenu" class="nc.ui.workflow.admin.action.QueryMenuAction">
+		<property name="actions">
+			<list>
+				<ref bean="flowinstqryAction" />
+				<ref bean="worknoteqryAction" />
+			</list>
+		</property>
+	</bean>
+	<!-- 工作项查询按钮 -->
+	<bean id="worknoteqryAction" class="nc.ui.workflow.admin.action.WorkNoteQueryAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="dataManager" ref="modelDataManager"></property>
+		<property name="templateContainer" ref="queryTemplateContainer"></property>
+		<property name="queryDelegator">
+			<bean class="nc.ui.uif2.actions.DefaultQueryDelegator">
+				<property name="context" ref="context"></property>
+				<property name="nodeKey" value="worknote_query"></property>
+			</bean>
+		</property>
+
+	</bean>
+	<!-- 流程实例查询按钮 -->
+	<bean id="flowinstqryAction" class="nc.ui.workflow.admin.action.FlowInstanceQueryAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="dataManager" ref="flowinstmodelDataManager"></property>
+		<property name="templateContainer" ref="flowinstqueryTemplateContainer"></property>
+		<property name="queryDelegator">
+			<bean class="nc.ui.uif2.actions.DefaultQueryDelegator">
+				<property name="context" ref="context"></property>
+				<property name="nodeKey" value="flowinstance_query"></property>
+			</bean>
+		</property>
+
+	</bean>
+	<!-- 单据联查按钮 -->
+	<bean id="billInfoAction" class="nc.ui.workflow.admin.action.BillInfoAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+
+	</bean>
+	<!-- 流程查看按钮 -->
+	<bean id="flowInfoAction" class="nc.ui.workflow.admin.action.FlowInfoAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+	</bean>
+	<!-- 单据联查按钮 -->
+	<bean id="instBillInfoAction" class="nc.ui.workflow.admin.action.InstBillInfoAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+	</bean>
+	<!-- 流程查看按钮 -->
+	<bean id="instFlowInfoAction" class="nc.ui.workflow.admin.action.InstFlowInfoAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+	</bean>
+	<!--工作项工具按钮 -->
+	<bean id="worknoteToolMenu" class="nc.ui.workflow.admin.action.WorknoteToolMenu">
+		<property name="code" value="tool"></property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="101609"></property>
+				<property name="resId" value="UPP101609-000002"></property>
+				<property name="defaultValue" value="工具"></property>
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="alterSendAction" />
+				<ref bean="addApproverAction" />
+				<ref bean="mailUrgencyAction" />
+			</list>
+		</property>
+	</bean>
+	<!-- 改派按钮 -->
+	<bean id="alterSendAction" class="nc.ui.workflow.admin.action.AlterSendAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="paginModel" ref="paginationModel"></property>
+		<property name="exceptionHandler" ref="handler" />
+		<property name="modelDataManager" ref="modelDataManager"/>
+	</bean>
+	<!-- 加签按钮 -->
+	<bean id="addApproverAction" class="nc.ui.workflow.admin.action.AddApproverAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="modelDataManager" ref="modelDataManager"/>
+		<property name="exceptionHandler" ref="handler" />
+	</bean>
+	<!-- 邮件催办 -->
+	<bean id="mailUrgencyAction" class="nc.ui.workflow.admin.action.MailUrgencyAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+	</bean>
+	<!--流程实例工具按钮 -->
+	<bean id="flowinstToolMenu" class="nc.ui.workflow.admin.action.FlowinstToolMenu">
+		<property name="code" value="tool"></property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="101609"></property>
+				<property name="resId" value="UPP101609-000002"></property>
+				<property name="defaultValue" value="工具"></property>
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="suspendAction" />
+				<ref bean="resumeAction" />
+				<ref bean="terminateAction" />
+				<ref bean="instanceHisAction" />
+				<ref bean="separatorAction" />
+				<ref bean="timeLimitAction" />
+			</list>
+		</property>
+	</bean>
+	<!-- 挂起流程实例 -->
+	<bean id="suspendAction" class="nc.ui.workflow.admin.action.SuspendAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+		<property name="modelDataManager" ref="flowinstmodelDataManager"/>
+	</bean>
+	<!-- 恢复流程实例 -->
+	<bean id="resumeAction" class="nc.ui.workflow.admin.action.ResumeAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+		<property name="modelDataManager" ref="flowinstmodelDataManager"/>
+	</bean>
+	<!-- 终止流程实例 -->
+	<bean id="terminateAction" class="nc.ui.workflow.admin.action.TerminateAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+		<property name="modelDataManager" ref="flowinstmodelDataManager"/>
+	</bean>
+	<!-- 查看历史流程实例 -->
+	<bean id="instanceHisAction" class="nc.ui.workflow.admin.action.InstanceHisAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+
+	</bean>
+	<!-- 设置时限流程实例 -->
+	<bean id="timeLimitAction" class="nc.ui.workflow.admin.action.TimeLimitAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="exceptionHandler" ref="handler" />
+	</bean>
+	<!-- 刷新按钮 -->
+	<bean id="refreshAction" class="nc.ui.workflow.admin.action.RefreshAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="paginModel" ref="paginationModel"></property>
+		<property name="exceptionHandler" ref="handler" />
+		<property name="modelDataManager" ref="modelDataManager"/>
+	</bean>
+	<!-- XBX删除按钮 -->
+	<bean id="deleteAction" class="nc.ui.workflow.admin.action.DeleteAction">
+		<property name="model" ref="worknoteAppModel" />
+		<property name="actionCode" value="scdj" />
+	</bean>
+	<!-- inst刷新按钮 -->
+	<bean id="instRefreshAction" class="nc.ui.workflow.admin.action.InstRefreshAction">
+		<property name="model" ref="flowinstAppModel" />
+		<property name="paginModel" ref="instPaginationModel"></property>
+		<property name="exceptionHandler" ref="handler" />
+		<property name="modelDataManager" ref="flowinstmodelDataManager"/>
+	</bean>
+
+	<!-- 分隔按钮 -->
+	<bean id="separatorAction" class="nc.funcnode.ui.action.SeparatorAction" />
+
+	<!-- 辅助Bean -->
+	<bean id="handler" class="nc.ui.uif2.DefaultExceptionHanler">
+		<property name="context" ref="context"></property>
+	</bean>
+
+</beans>

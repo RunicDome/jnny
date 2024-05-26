@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+jaxb:version="2.0"
+xmlns:ns0="http://intf.ws.nc/IThirdQueryService"
+targetNamespace="http://intf.ws.nc/IThirdQueryService">
+
+<jaxws:bindings>
+	<jaxws:package name="nc.ws.intf"/>
+</jaxws:bindings>
+
+<wsdl:types>
+   <xsd:schema xmlns:ns="http://intf.ws.nc/IThirdQueryService"
+			attributeFormDefault="unqualified"
+			elementFormDefault="unqualified"
+			targetNamespace="http://intf.ws.nc/IThirdQueryService" jaxb:version="2.0">
+	<xsd:annotation>
+    	<xsd:appinfo>
+   			<jaxb:schemaBindings>
+    			<jaxb:package name="nc.ws.intf"/>
+    		</jaxb:schemaBindings>
+   		</xsd:appinfo>
+   	</xsd:annotation>
+	<xsd:element name="queryService">
+         <xsd:complexType>
+            <xsd:sequence>
+				<xsd:element name="string"  minOccurs="0" nillable="true" type="xsd:string"/>
+             </xsd:sequence>  
+         </xsd:complexType>
+     </xsd:element>
+	<xsd:element name="queryServiceResponse">
+         <xsd:complexType>
+            <xsd:sequence>
+				<xsd:element name="return"  minOccurs="0" nillable="true" type="xsd:string"/>
+             </xsd:sequence>  
+         </xsd:complexType>
+     </xsd:element>
+   </xsd:schema>
+</wsdl:types>
+    <wsdl:message name="queryServiceRequest">
+        <wsdl:part name="parameters"  element="ns0:queryService"/>
+    </wsdl:message>
+    <wsdl:message name="queryServiceResponse">
+        <wsdl:part name="parameters"  element="ns0:queryServiceResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="IThirdQueryServicePortType">
+        <wsdl:operation name="queryService">
+            <wsdl:input message="ns0:queryServiceRequest" wsaw:Action="urn:queryService"/>
+            <wsdl:output message="ns0:queryServiceResponse" wsaw:Action="urn:queryServiceResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    
+    <wsdl:binding name="IThirdQueryServiceSOAP11Binding" type="ns0:IThirdQueryServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="queryService">
+            <soap:operation soapAction="urn:queryService" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="IThirdQueryService">
+        <wsdl:port name="IThirdQueryServiceSOAP11port_http" binding="ns0:IThirdQueryServiceSOAP11Binding">
+            <soap:address location="http://localhost/uapws/service/IThirdQueryService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

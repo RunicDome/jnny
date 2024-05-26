@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- xbx添加附件张数 -->
+	<!-- 1、扩展导出按钮 xbx添加附件张数  -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="listActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="yxbs" />
+        <property name="pos" value="after" />
+        <property name="action" ref="fjzs" />
+    </bean>
+    
+    <!-- xbx添加项目付款计划 -->
+	<!-- 1、扩展导出按钮 xbx添加推工程付款单  -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="cardActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="yxbs" />
+        <property name="pos" value="after" />
+        <property name="action" ref="fjzs" />
+    </bean>
+
+	<!-- 附件张数-->
+	<bean id="fjzs" class="nc.ui.arap.action.YFDFJZSAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="code" value="fjzs" />
+	</bean>
+</beans>

@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<import resource="classpath:/nc/ui/arap/baseconfig/arapbase_top.xml" />
+	<import resource="classpath:nc/ui/arap/baseconfig/appevents_config.xml" />
+	<import resource="classpath:nc/ui/arap/baseconfig/appbesidewidget_config.xml" />
+
+
+	<bean id="retAddLoader" class="nc.ui.arap.pub.remote.RetAddLoader"
+		init-method="prepare">
+		<property name="billtype" ref="defBillType" />
+		<property name="transtype" ref="NodeKeyQry" />
+	</bean>
+
+	<bean id="addActionGroup" class="nc.ui.arap.actions.ArapAddFlowMenuAciton"
+		init-method="refreshChildBtns">
+		<constructor-arg ref="NodeKeyQry" />
+		<constructor-arg ref="billFormEditor" />
+		<constructor-arg ref="interceptor" />
+		<property name="list" ref="listView" />
+		<property name="loader" ref="retAddLoader" />
+		<property name="model" ref="ManageAppModel" />
+		<property name="transferBillViewProcessor" ref="transferProcessor" />
+		<property name="orgChangedImpl" ref="orgchange" />
+		<property name="code">
+			<value>add</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="pubapp_0" />
+				<property name="resId" value="0pubapp-0121" />
+				<property name="defaultValue" value="新增" />
+			</bean>
+		</property>
+	</bean>
+	<bean name="transferProcessor" class="nc.ui.arap.view.ArapTransferBillViewProcessor">
+		<property name="list" ref="listView" />
+		<property name="transferLogic" ref="transferLogic" />
+		<property name="actionContainer" ref="listActions" />
+		<property name="billForm" ref="billFormEditor" />
+	</bean>
+	<bean name="transferLogic" class="nc.ui.pubapp.billref.dest.DefaultBillDataLogic">
+		<property name="billForm" ref="billFormEditor" />
+	</bean>
+
+
+	<!--action拦截器-->
+	<bean id="exportActionInterceptor"
+		class="nc.ui.arap.importable.interceptor.ExportActionInterceptor">
+		<property name="model" ref="ManageAppModel"></property>
+	</bean>
+	<bean id="interceptor"
+		class="nc.ui.arap.actions.interceptor.CompositeActionInterceptor">
+		<property name="interceptors">
+			<list>
+				<ref bean="caActionInterceptor" />
+				<ref bean="pauseTransactActionInterceptor" />
+				<ref bean="billVersionActionInterceptor" />
+				<ref bean="operPowerInterceptor" />
+				<ref bean="billVerifyActionInterceptor" />
+				<ref bean="orgCheckActionInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- 数据模型管理器，主要负责各种方式的模型初始化 -->
+	<bean id="modelDataManager" class="nc.ui.arap.model.ArapPageModelDataManager">
+		<property name="model" ref="ManageAppModel"></property>
+		<property name="service" ref="ManageModelService"></property>
+		<property name="paginationDelegator" ref="paginationDelegator"></property>
+	</bean>
+
+	<!--页签按钮########################################################### -->
+	<bean id="toftpanelActionContributors" class="nc.ui.uif2.actions.ActionContributors">
+		<property name="contributors">
+			<list>
+				<ref bean="listActions" />
+				<ref bean="cardActions" />
+				<ref bean="verifyActions" />
+				<ref bean="makeupActions" />
+			</list>
+		</property>
+	</bean>
+	<bean id="ClosingListener" class="nc.ui.uif2.FunNodeClosingHandler">
+		<property name="model" ref="ManageAppModel" />
+		<property name="saveaction" ref="saveAction" />
+		<property name="cancelaction" ref="cancelAction" />
+	</bean>
+
+	<bean id="scaleProcessor" class="nc.ui.arap.scale.ArapBillCardPanelScaleProcessor" />
+	<bean id="listScaleProcessor" class="nc.ui.arap.scale.ArapBillListPanelScaleProcessor" />
+	<!--更换所有参照的组织-->
+	<bean id="orgchange" class="nc.ui.arap.viewhandler.ArapOrgChanged">
+		<property name="bcpsp" ref="scaleProcessor" />
+		<property name="htob" ref="ArapH2B" />
+	</bean>
+
+	<!--
+		界面布局总装###########################################################
+	-->
+	<bean id="container" class="nc.ui.uif2.TangramContainer"
+		init-method="initUI">
+		<property name="tangramLayoutRoot">
+			<bean class="nc.ui.uif2.tangramlayout.node.TBNode">
+				<property name="tabs">
+					<list>
+
+						<bean class="nc.ui.uif2.tangramlayout.node.HSNode">
+
+							<property name="left">
+								<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+									<property name="component" ref="queryAreaShell" />
+								</bean>
+							</property>
+							<property name="right">
+								<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+									<property name="up">
+										<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+											<property name="component" ref="queryInfo" />
+											
+										</bean>
+									</property>
+									<property name="down">
+										<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+											<property name="name"><bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0135" />	<property name="defaultValue" value="列表" /></bean></property>
+											<property name="component" ref="listView" />
+										</bean>
+									</property>
+									<property name="showMode" value="NoDivider"></property>
+									<property name="dividerLocation" value="30f" />
+								</bean>
+							</property>
+							<property name="dividerLocation">
+								<value>0.2f</value>
+							</property>
+						</bean>
+						<!-- <bean class="nc.ui.uif2.tangramlayout.node.HSNode">
+							<property name="left"> -->
+								<bean class="nc.ui.uif2.tangramlayout.node.VSNode">
+
+									<property name="up">
+										<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+											<property name="component" ref="cardInfoPnl" />
+										</bean>
+									</property>
+									<property name="down">
+										<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+											<property name="name"><bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0136" />	<property name="defaultValue" value="卡片" /></bean></property>
+											<property name="component" ref="billFormEditor" />
+										</bean>
+									</property>
+									<property name="showMode" value="NoDivider"></property>
+									<property name="dividerLocation" value="30f" />
+
+								</bean>
+							<!--</property>
+							<property name="right">
+								<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+									<property name="component" ref="multiBesideWidget" />
+								</bean>
+							</property>
+							<property name="dividerLocation" value="0.8f" />
+						</bean>-->
+						<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+							<property name="name">
+								<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0140" />	<property name="defaultValue" value="核销界面" /></bean>
+							</property>
+							<property name="component" ref="verifyui"></property>
+						</bean>
+
+						<bean class="nc.ui.uif2.tangramlayout.node.CNode">
+							<property name="name">
+								<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0141" />	<property name="defaultValue" value="补差面板" /></bean>
+							</property>
+							<property name="component" ref="makeupEditor"></property>
+						</bean>
+					</list>
+				</property>
+				<property name="showMode" value="CardLayout"></property>
+			</bean>
+		</property>
+	</bean>
+
+
+
+	<bean id="queryInfo" class="nc.ui.uif2.tangramlayout.CardLayoutToolbarPanel">
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+
+	<!-- 查询面板  -->
+	<bean id="queryAreaShell" class="nc.ui.pubapp.uif2app.tangramlayout.UEQueryAreaShell"
+		init-method="initUI">
+		<property name="queryAreaCreator" ref="queryAction" />
+	</bean>
+
+	<bean id="cardInfoPnl"
+		class="nc.ui.pubapp.uif2app.tangramlayout.UECardLayoutToolbarPanel">
+		<property name="actions">
+			<list>
+				<ref bean="documentManage"/>
+				<ref bean="actionsBarSeparator" />
+				<ref bean="firstLineAction" />
+				<ref bean="preLineAction" />
+				<ref bean="nextLineAction" />
+				<ref bean="lastLineAction" />
+				<ref bean="actionsBarSeparator" />
+				<bean class="nc.ui.arap.actions.BillHeadZoomAction">
+					<property name="model" ref="ManageAppModel" />
+					<property name="billForm" ref="billFormEditor" />
+				</bean>
+			</list>
+		</property>
+		<property name="titleAction">
+			<bean id="returnaction" class="nc.ui.arap.actions.ArapReturnAction">
+				<property name="goComponent" ref="listView"></property>
+				<property name="saveAction" ref="saveAction" />
+				<property name="model" ref="ManageAppModel" />
+			</bean>
+		</property>
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+
+	<!-- 及时核销容器 -->
+	<bean id="verifyui" class="nc.ui.arap.commom.OppUIContainer"
+		init-method="initUI">
+		<property name="closingListener" ref="ClosingListener" />
+		<!-- <property name="tabbedPaneAwareComponent"></property> -->
+	</bean>
+
+	<bean id="makeupAppModel" class="nc.ui.pubapp.uif2app.model.BillManageModel">
+		<property name="service" ref="ManageModelService"></property>
+		<property name="businessObjectAdapterFactory" ref="boadatorfactory"></property>
+		<property name="context" ref="context"></property>
+	</bean>
+	<bean id="makeupValueManager" class="nc.ui.pubapp.uif2app.view.BillCardAllDataValueStrategy" />
+
+	<bean id="makeupNodeKeyQry" class="nc.ui.arap.view.NodeKeyQry">
+		<property name="model" ref="makeupAppModel" />
+		<property name="defNodekey" ref="defNodeKey" />
+	</bean>
+	<!--补差页签-->
+	<bean id="makeupEditor" class="nc.ui.arap.view.ArapBillCardForm"
+		init-method="initRealUI">
+		<property name="model" ref="makeupAppModel"></property>
+		<property name="componentValueManager" ref="makeupValueManager"></property>
+		<!--(可选) 也可以直接设置nodekey-->
+		<property name="nodekeyQry" ref="makeupNodeKeyQry"></property>
+		<property name="closingListener" ref="ClosingListener" />
+		<property name="autoAddLine" value="false" />
+		<!-- 是否进行模板非空校验 -->
+		<property name="templateNotNullValidate" value="true" />
+		<property name="userdefitemPreparator">
+			<bean class="nc.ui.uif2.editor.UserdefitemContainerPreparator">
+				<property name="container" ref="userdefitemContainer" />
+				<property name="params">
+					<list>
+						<bean name="cardUserdefitemQueryParam" class="nc.ui.uif2.editor.UserdefQueryParam">
+							<property name="mdfullname" value="arap.recbill" />
+							<property name="pos" value="0" />
+							<property name="prefix" value="def" />
+						</bean>
+						<bean name="cardUserdefitemQueryParam1" class="nc.ui.uif2.editor.UserdefQueryParam">
+							<property name="mdfullname" value="arap.recitem" />
+							<property name="pos" value="1" />
+							<property name="prefix" value="def" />
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!--
+		Actions ###########################################################
+	-->
+	<!-- 卡片界面上的Action 抽象类 -->
+	<!--按表体核销  -->
+	<bean id="onBodyVerify" class="nc.ui.arap.actions.BodyVerifyAction"
+		autowire="byName">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="ManageAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+		<property name="oppui" ref="verifyui"></property>
+		<property name="listView" ref="listView" />
+		<property name="verifyui" ref="verifyui"></property>
+	</bean>
+	<!-- 按单据核销 -->
+	<bean id="onWholeBillVerifyAction" class="nc.ui.arap.actions.WholeBillVerifyAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="ManageAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+		<property name="listView" ref="listView" />
+		<property name="oppui" ref="verifyui"></property>
+		<property name="verifyui" ref="verifyui"></property>
+
+	</bean>
+
+	<!-- 核销面板上的所有按钮集合 -->
+	<bean id="verifyActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="verifyui" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="verifyMakeupAction" />
+				<ref bean="verifyAllocationAction" />
+				<ref bean="verifyIntimeAction" />
+				<ref bean="verifyFilterAction" />
+				<ref bean="verifyAllSelectedAction" />
+				<ref bean="verifyAllCancelAction" />
+				<ref bean="verifyGoBackAction" />
+				<ref bean="verifyLinkedQueryAction" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 即时核销—补差 -->
+	<bean id="verifyMakeupAction" class="nc.ui.arap.actions.VerifyMakeupAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="makeupEditor" ref="makeupEditor"></property>
+		<property name="context" ref="context"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="orgChangedImpl" ref="orgchange" />
+		<property name="cardPanel" ref="billFormEditor" />
+	</bean>
+	<!-- 即时核销_分配  -->
+	<bean id="verifyAllocationAction" class="nc.ui.arap.actions.VerifyAllocationAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+
+	<!--即时核销—核销-->
+	<bean id="verifyIntimeAction" class="nc.ui.arap.actions.VerifyIntimeAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+		<property name="billFormEditor" ref="billFormEditor"></property>
+
+	</bean>
+	<!--即时核销—过滤  -->
+	<bean id="verifyFilterAction" class="nc.ui.arap.actions.VerifyFilterAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+	<!-- 即时核销_全选 -->
+	<bean id="verifyAllSelectedAction" class="nc.ui.arap.actions.VerifyAllSelectedAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+	<!-- 即时核销_全消  -->
+	<bean id="verifyAllCancelAction" class="nc.ui.arap.actions.VerifyAllCancelAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+	<!-- 即时核销返回  -->
+	<bean id="verifyGoBackAction" class="nc.ui.arap.actions.VerifyGoBackAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="billFormEditor" ref="billFormEditor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+	<!-- 即时核销_联查单据  -->
+	<bean id="verifyLinkedQueryAction" class="nc.ui.arap.actions.VerifyLinkedQueryAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="cardPanel" ref="billFormEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+	<!-- 补差面板_取消-->
+	<bean id="makeupCanelAction" class="nc.ui.arap.actions.MakeupCanelAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="verifyui" ref="verifyui"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="makeupEditor" ref="makeupEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+
+	<!-- 补差面板_确认  -->
+	<bean id="makeupConfirmAction" class="nc.ui.arap.actions.MakeupConfirmAction">
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="billFormEditor" ref="billFormEditor"></property>
+		<property name="model" ref="makeupAppModel" />
+		<property name="makeupEditor" ref="makeupEditor" />
+		<property name="context" ref="context" />
+
+	</bean>
+	<!-- 补差上的所有按钮集合 -->
+	<bean id="makeupActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer"
+		autowire="byName">
+		<constructor-arg>
+			<ref bean="makeupEditor" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="makeupConfirmAction" />
+				<ref bean="makeupCanelAction" />
+			</list>
+		</property>
+
+	</bean>
+
+
+
+	<bean id="currNullAction" class="nc.funcnode.ui.action.SeparatorAction" />
+
+	<bean id="saveAction" class="nc.ui.arap.actions.BillSaveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="editAction" class="nc.ui.arap.actions.BillEditAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="deleteAction" class="nc.ui.arap.actions.BillDeleteAction"
+		autowire="byName">
+		<property name="editor" ref="billFormEditor" />
+		<property name="model" ref="ManageAppModel" />
+		<property name="listView" ref="listView" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="cancelAction" class="nc.ui.arap.actions.BillCancelAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="conferCancelAction" class="nc.ui.arap.actions.BillConferCancelAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="addAction" class="nc.ui.arap.actions.BillAddAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="showUpComponent" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="addline" class="nc.ui.uif2.actions.AddLineAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="cardpanel" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor" />
+
+
+	</bean>
+
+	<bean id="queryDLGInitializer" class="nc.ui.arap.query.ArapBillQueryConditionDLGInitializer">
+		<property name="model" ref="ManageAppModel" />
+		<property name="billType" ref="defBillType"></property>
+		<property name="isInit" value="N"></property>
+	</bean>
+	<bean id="queryTemplateContainer" class="nc.ui.arap.view.ArapQueryTemplateContainer">
+		<property name="context" ref="context"></property>
+		<!-- <property name="nodeKey" ref="defNodeKey"/>  -->
+	</bean>
+	<bean id="remoteCallCombinatorCaller" class="nc.ui.uif2.editor.UIF2RemoteCallCombinatorCaller">
+		<property name="remoteCallers">
+			<list>
+				<ref bean="queryTemplateContainer"></ref>
+				<ref bean="userdefitemContainer"></ref>
+				<ref bean="templateContainer"></ref>
+				<ref bean="retAddLoader"></ref>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 切换到列表界面的拦截器 -->
+	<bean id="listInterceptor"
+		class="nc.ui.pubapp.uif2app.actions.interceptor.ShowUpComponentInterceptor">
+		<property name="showUpComponent" ref="listView" />
+	</bean>
+	<bean id="queryAction" class="nc.ui.pubapp.uif2app.query2.action.DefaultQueryAction">
+		<property name="dataManager" ref="modelDataManager" />
+		<property name="qryCondDLGInitializer" ref="queryDLGInitializer" />
+		<property name="model" ref="ManageAppModel" />
+		<property name="templateContainer" ref="queryTemplateContainer"></property>
+		<property name="interceptor" ref="listInterceptor" />
+		<property name="showUpComponent" ref="listView" />
+	</bean>
+
+	<bean id="linkQueryAction" class="nc.ui.arap.actions.BillLinkQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<bean id="linkVoucharQueryAction" class="nc.ui.arap.actions.LinkVoucharQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<bean id="bconferQueryAction" class="nc.ui.arap.actions.LinkBConferQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="container" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="flowStateQueryAction" class="nc.ui.arap.actions.BillFlowStateQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="container" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="balanceLinkQueryAction" class="nc.ui.arap.actions.BillBalanceLinkQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="tbbLinkAction" class="nc.ui.arap.actions.BillTbbLinkAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="dealLinkQueryAction" class="nc.ui.arap.actions.BillDealLinkQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="container" ref="container" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="termLinkQueryAction" class="nc.ui.arap.actions.LinkTermQueryAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="initCancelCloseAction" class="nc.ui.arap.actions.InitBillCancelCloseAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="refreshSingAction" class="nc.ui.arap.actions.BillRefreshSingAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<!--XBX修改20190701-->
+	<bean id="ApproveAction" class="nc.ui.arap.actions.BillApproveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<!--XBX修改20190701-->
+	<bean id="UnApproveAction" class="nc.ui.arap.actions.BillUnApproveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<!-- 卡片界面侧边栏的审核按钮 ，添加了过滤器-->
+	<bean id="BillApproveAction" class="nc.ui.arap.actions.BillApproveAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<!-- 卡片界面侧边栏的取消审核按钮，添加了过滤器 -->
+	<bean id="BillUnApproveAction" class="nc.ui.arap.actions.BillUnApproveAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="ApproveListBatchAction" class="nc.ui.arap.actions.BillListApproveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="listView" />
+		<property name="isbatch" value="Y" />
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="tpaProgressUtil">
+			<bean class="nc.ui.uif2.components.progress.TPAProgressUtil">
+				<property name="context" ref="context" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="UnApproveListBatchAction" class="nc.ui.arap.actions.BillListUnApproveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="listView" />
+		<property name="isbatch" value="Y" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<!-- XBX修改审批事件20190617 -->
+	<bean id="ApproveListAction" class="nc.ui.arap.actions.FKBillListApproveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="listView" />
+		<property name="isbatch" value="N" />
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="tpaProgressUtil">
+			<bean class="nc.ui.uif2.components.progress.TPAProgressUtil">
+				<property name="context" ref="context" />
+			</bean>
+		</property>
+	</bean>
+	
+    <!-- suchb修改审批事件20190619 -->
+	<bean id="UnApproveListAction" class="nc.ui.arap.actions.FKBillListUnApproveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="listView" />
+		<property name="isbatch" value="N" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="tempSaveAction" class="nc.ui.arap.actions.BillTempSaveAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="copyAction" class="nc.ui.arap.actions.BillCopyAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="writeBack" class="nc.ui.arap.actions.BillWriteBackAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+	<bean id="documentManage" class="nc.ui.arap.actions.DocumentManageAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="rentAffiliated" class="nc.ui.arap.actions.RentAffiliatedAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="noteRegister" class="nc.ui.arap.actions.NoteRegisterAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+
+	<bean id="makeAlterBill" class="nc.ui.arap.actions.MakeAlterBillAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="pauseTransact" class="nc.ui.arap.actions.PauseTransactAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="cancelPauseTransact" class="nc.ui.arap.actions.CancelPauseTransactAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="printBill" class="nc.ui.arap.actions.BillPrintAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="taxForm" ref="taxForm"></property>
+	</bean>
+
+	<bean id="officialPrint" class="nc.ui.arap.actions.OfficialPrintAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+		<property name="taxForm" ref="taxForm"></property>
+	</bean>
+
+	<bean id="cancelPrint" class="nc.ui.arap.actions.CancelPrintAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+
+
+	<bean id="printList" class="nc.ui.arap.actions.PrintListAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="madeBillAction" class="nc.ui.arap.actions.MadeBillAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+		<property name="loginContext" ref="context" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="prepayAction" class="nc.ui.arap.actions.BillPrepayAction"
+		autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="interceptor" ref="interceptor"></property>
+	</bean>
+
+	<bean id="billOperateActionGroup" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>billOperate</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0137" />	<property name="defaultValue" value="单据操作" /></bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="deleteAction" />
+				<ref bean="editAction" />
+				<ref bean="tempSaveAction" />
+				<ref bean="writeBack" />
+				<ref bean="documentManage" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="billOperateActionGroup_Record" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>billOperate</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0137" />	<property name="defaultValue" value="单据操作" /></bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="deleteAction" />
+				<ref bean="editAction" />
+				<ref bean="tempSaveAction" />
+				<ref bean="documentManage" />
+			</list>
+		</property>
+	</bean>
+	<bean id="billOperateActionGroup_Init" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>billOperate</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0137" />	<property name="defaultValue" value="单据操作" /></bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="deleteAction" />
+				<ref bean="editAction" />
+				<ref bean="documentManage" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="billOperateActionGroup_List" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>billOperate_List</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0137" />	<property name="defaultValue" value="单据操作" /></bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="deleteAction" />
+				<ref bean="documentManage" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="closeOperateAction" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>billClose</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0138" />	<property name="defaultValue" value="关闭操作" /></bean>
+		</property>
+		<property name="actions">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="billApproveActionGroup" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code" value="billApproveActionGroup" />
+		<property name="name"><bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0142" />	<property name="defaultValue" value="审批" /></bean></property>
+		<property name="actions">
+			<list>
+				<ref bean="ApproveAction" />
+				<ref bean="UnApproveAction" />
+				<ref bean="flowStateQueryAction" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- 审批按钮组 -->
+	<bean id="billApproveActionGroup_List" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code" value="billApproveActionGroup_List" />
+		<property name="name"><bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0142" />	<property name="defaultValue" value="审批" /></bean></property>
+		<property name="actions">
+			<list>
+				<ref bean="ApproveListAction" />
+				<ref bean="UnApproveListAction" />
+				<ref bean="ApproveListBatchAction" />
+				<ref bean="UnApproveListBatchAction" />
+				<ref bean="flowStateQueryAction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="billVerifyActionGroup" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code">
+			<value>billVerify</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0143" />	<property name="defaultValue" value="即时核销" /></bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="onBodyVerify" />
+				<ref bean="onWholeBillVerifyAction" />
+			</list>
+		</property>
+	</bean>
+
+
+
+	<bean id="pauseTransactActionGroup" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code">
+			<value>pauseTransact</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="2006pub_0" />
+				<property name="resId" value="02006pub-0644" />
+				<property name="defaultValue" value="挂起操作" />
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="pauseTransact" />
+				<ref bean="cancelPauseTransact" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="printOperateActionGroup" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code" value="printOperateActionGroup" />
+		<property name="name"><bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0139" />	<property name="defaultValue" value="打印" /></bean></property>
+		<property name="actions">
+			<list>
+				<ref bean="printBill" />
+				<ref bean="printPreview" />
+				<ref bean="printOutput" />
+				<ref bean="separatorAction" />
+				<ref bean="officialPrint" />
+				<ref bean="cancelPrint" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 打印按钮组 -->
+	<bean id="printOperateActionGroup_List" class="nc.funcnode.ui.action.GroupAction">
+		<property name="code" value="printOperateActionGroup_List" />
+		<property name="name"><bean class="nc.ui.uif2.I18nFB">	<property name="resDir" value="common" />	<property name="resId" value="arapcommonv6-0139" />	<property name="defaultValue" value="打印" /></bean></property>
+		<property name="actions">
+			<list>
+				<ref bean="printBill" />
+				<ref bean="printPreview" />
+				<ref bean="printOutput" />
+				<ref bean="separatorAction" />
+				<ref bean="officialPrint" />
+				<ref bean="cancelPrint" />
+				<ref bean="separatorAction" />
+				<ref bean="printList" />
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="relatedQueryActionGroup" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>relatedQuery</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="pubapp_0" />
+				<property name="resId" value="0pubapp-0025" />
+				<property name="defaultValue" value="联查" />
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="linkQueryAction" />
+				<ref bean="balanceLinkQueryAction" />
+				<ref bean="dealLinkQueryAction" />
+				<ref bean="linkVoucharQueryAction" />
+				<ref bean="bconferQueryAction" />
+				<ref bean="termLinkQueryAction" />
+				<ref bean="tbbLinkAction" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 浏览按钮 卡片界面共享信息按钮-->
+	<bean id="firstLineAction" class="nc.ui.uif2.actions.FirstLineAction">
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+	<bean id="nextLineAction" class="nc.ui.uif2.actions.NextLineAction">
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+	<bean id="preLineAction" class="nc.ui.uif2.actions.PreLineAction">
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+	<bean id="lastLineAction" class="nc.ui.uif2.actions.LastLineAction">
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+
+	<bean id="transTypeRefModel" class="nc.ui.arap.ref.FiBillTypeRefModel" >
+		<property name="nodeKeyQry" ref="NodeKeyQry"/>
+	</bean>
+	
+	<!-- 查看影像  -->
+	<bean id="receiptCheckAction" class="nc.ui.arap.actions.ReceiptCheckAction" autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+	</bean>
+	<!-- 影像扫描  -->
+	<bean id="receiptScanAction" class="nc.ui.arap.actions.ReceiptScanAction" autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="listView" ref="listView" />
+	</bean>
+	
+	<bean id="receiptMenuAction" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code">
+			<value>Image</value>
+		</property>
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="common" />
+				<property name="resId" value="arapcommonv6-0180" />
+				<property name="defaultValue" value="影像" />
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="receiptCheckAction" />
+				<ref bean="receiptScanAction" />
+			</list>
+		</property>
+	</bean>
+</beans>

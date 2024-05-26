@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- xbx添加项目付款计划 -->
+	<!-- 1、扩展导出按钮 xbx添加推工程付款单  -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="listActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="ReceiptScanAction" />
+        <property name="pos" value="after" />
+        <property name="action" ref="pushGCFKD" />
+    </bean>
+    <!-- xbx添加项目付款计划 -->
+	<!-- 1、扩展导出按钮 xbx添加推工程付款单  -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="cardActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="ReceiptScanAction" />
+        <property name="pos" value="after" />
+        <property name="action" ref="pushGCFKD" />
+    </bean>
+	<!-- 推工程付款单 -->
+	<bean id="pushGCFKD" class="nc.ui.arap.actions.PushGCFKD">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+	</bean>
+</beans>

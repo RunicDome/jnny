@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<import resource="classpath:nc/ui/arap/config/payablebill_base.xml" />
+	<!--导入导出action组  -->
+	<bean id="importableEditor" class="nc.ui.arap.importable.PayableImportablePanel" >
+	<property name="uiEditor" ref="billFormEditor" />
+	</bean>
+	<bean id="importAction" class="nc.ui.arap.importable.action.ArapImportAction" autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="importableEditor" ref="importableEditor" />
+	</bean>
+	<bean id="exportAction" class="nc.ui.arap.importable.ArapExportAction"
+		autowire="byName">
+		<property name="importableEditor" ref="importableEditor" />
+		<property name="model" ref="ManageAppModel" />
+		<property name="interceptor" ref="exportActionInterceptor"></property>
+	</bean>
+	<bean id="importexportActionGroup" class="nc.funcnode.ui.action.MenuAction">
+		<property name="code" value="ImportExportMenu" />
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB">
+				<property name="resDir" value="2006pub_0"></property>
+				<property name="resId" value="02006pub-0654"></property>
+				<property name="defaultValue" value="导入导出"></property>
+			</bean>
+		</property>
+		<property name="actions">
+			<list>
+				<ref bean="importAction" />
+				<ref bean="currNullAction" />
+				<ref bean="exportAction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="listActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="listView" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="addActionGroup" />
+				<ref bean="editAction" />
+				<ref bean="deleteAction" />
+				<ref bean="copyAction" />
+				<ref bean="currNullAction" />
+				<ref bean="queryAction" />
+				<ref bean="refreshAllAction" />
+				<ref bean="currNullAction" />
+				<ref bean="transtype" />
+				<ref bean="billApproveActionGroup_List" />
+				<ref bean="billVerifyActionGroup" />
+				<ref bean="madeBillAction" />
+				<ref bean="writeBack" />
+				<ref bean="pauseTransactActionGroup" />
+				<ref bean="billAssistantActionGroup" />
+				<ref bean="currNullAction" />
+				<ref bean="receiptMenuAction" />
+				<ref bean="currNullAction"/>
+				<ref bean="relatedQueryActionGroup" />
+				<ref bean="currNullAction" />
+				<ref bean="importexportActionGroup" />
+				<ref bean="printOperateActionGroup_List" />
+				<!-- XBX20201201新增影像补扫 -->
+				<ref bean="currNullAction" />
+				<ref bean="yxbs"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="cardActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="billFormEditor" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="addActionGroup" />
+				<ref bean="editAction" />
+				<ref bean="deleteAction" />
+				<ref bean="copyAction" />
+				<ref bean="currNullAction" />
+				<ref bean="queryAction" />
+				<ref bean="refreshSingAction" />
+				<ref bean="currNullAction" />
+				<ref bean="transtype" />
+				<ref bean="billApproveActionGroup" />
+				<ref bean="billVerifyActionGroup" />
+				<ref bean="madeBillAction" />
+				<ref bean="writeBack" />
+				<ref bean="pauseTransactActionGroup" />
+				<ref bean="billAssistantActionGroup" />
+				<ref bean="currNullAction" />
+				<ref bean="receiptMenuAction" />
+				<ref bean="currNullAction"/>
+				<ref bean="relatedQueryActionGroup" />
+				<ref bean="currNullAction" />
+				<ref bean="importexportActionGroup" />
+				<ref bean="printOperateActionGroup" />
+				<!-- XBX20201201新增影像补扫 -->
+				<ref bean="currNullAction" />
+				<ref bean="yxbs"/>
+			</list>
+		</property>
+		<property name="editActions">
+			<list>
+				<ref bean="saveAction" />
+				<ref bean="tempSaveAction" />
+				<ref bean="currNullAction" />
+				<ref bean="cancelAction" />
+				<ref bean="currNullAction" />
+				<ref bean="documentManage" />
+				<ref bean="receiptMenuAction" />
+				<!-- <ref bean="relatedQueryActionGroup"/> -->
+			</list>
+		</property>
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+
+	<bean id="multiBesideWidget" class="nc.ui.uif2.components.widget.MultiBesideWidget"
+		init-method="initUI">
+		<property name="besideWidgetInfoMap">
+			<map>
+				<entry>
+					<key>
+						<bean class="nc.ui.uif2.I18nFB">
+							<property name="resDir" value="uif2" />
+							<property name="resId" value="ActionRegistry-000055" />
+							<property name="defaultValue" value="审批" />
+						</bean>
+					</key>
+					<list>
+						<ref bean="besideApproveForm" />
+						<!-- 	<ref bean="besideHintMessageForm" />  -->
+						<ref bean="besideHistoryForm" />
+					</list>
+				</entry>
+
+			</map>
+		</property>
+		<property name="context" ref="context" />
+		<property name="model" ref="ManageAppModel" />
+	</bean>
+	<!-- 查看影像  -->
+	<bean id="receiptCheckAction" class="nc.ui.arap.actions.ReceiptCheckAction" autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="pk_billtype" value="F1" /> 
+	</bean>
+	<!-- 影像扫描  -->
+	<bean id="receiptScanAction" class="nc.ui.arap.actions.ReceiptScanAction" autowire="byName">
+		<property name="model" ref="ManageAppModel" />
+		<property name="pk_billtype" value="F1" /> 
+		<!-- 0 不控制，1转岗扫描，2制单人扫描-->
+		<property name="checkscanway" value="swing" /> 
+	</bean>
+	<!-- XBX20201203影像补扫 -->
+	<bean id="yxbs" class="nc.ui.arap.action.YXBSAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="code" value="yxbs" />
+	</bean>
+</beans>

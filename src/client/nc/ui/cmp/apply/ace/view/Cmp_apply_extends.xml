@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- xbx添加对接税务系统影像上传 -->
+	<!-- 1、扩展导出按钮 xbx添加对接税务系统影像上传  -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="actionsOfList" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="imageShowAction" />
+        <property name="pos" value="after" />
+        <property name="action" ref="SWImageUpload" />
+    </bean>
+    <!-- xbx添加项目对接税务系统影像上传 -->
+	<!-- 1、扩展导出按钮 xbx添加对接税务系统影像上传 -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="actionsOfCard" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="imageShowAction" />
+        <property name="pos" value="after" />
+        <property name="action" ref="SWImageUpload" />
+    </bean>
+	<!-- 对接税务系统影像上传 -->
+	<bean id="SWImageUpload" class="nc.ui.cmp.actions.SWImageUpload">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+	</bean>
+</beans>

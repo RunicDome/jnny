@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+	<import resource="Material_Config_Base.xml" />
+
+	<!-- 页签按钮 -->
+	<bean id="baseinfoListViewActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="baseinfoListView" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="addAction" />
+				<ref bean="editAction" />
+				<ref bean="deleteAction" />
+				<ref bean="copyaddAction" />
+				<ref bean="batchUpdateGroupAction" />
+				<ref bean="separatorAction" />
+				<ref bean="queryAction" />
+				<ref bean="refreshAction" />
+				<ref bean="filterAction" />
+				<ref bean="separatorAction" />
+				<ref bean="assignActionGroup" />
+				<ref bean="list_enableGroupAction" />
+				<ref bean="assistantMenu" />
+				<ref bean="wuliaotuisong" />
+				<ref bean="separatorAction" />
+				<ref bean="orgBrowseAction" />
+				<ref bean="marorgvisitAction" />
+				<ref bean="associatePfAction" />
+				<ref bean="separatorAction" />
+				<ref bean="listPrintActionGroup" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="baseinfoEditorActions" class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="baseinfoEditor" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="addAction" />
+				<ref bean="editAction" />
+				<ref bean="deleteAction" />
+				<ref bean="copyaddAction" />
+				<ref bean="batchUpdateGroupAction" />
+				<ref bean="separatorAction" />
+				<ref bean="queryAction" />
+				<ref bean="refreshCardAction" />
+				<ref bean="separatorAction" />
+				<ref bean="assignActionGroup" />
+				<ref bean="card_enableGroupAction" />
+				<ref bean="assistantMenu" />
+				<ref bean="wuliaotuisong" />
+				<ref bean="separatorAction" />
+				<ref bean="orgBrowseAction" />
+				<ref bean="marorgvisitAction" />
+				<ref bean="associatePfAction" />
+				<ref bean="separatorAction" />
+				<ref bean="printActionGroup" />
+			</list>
+		</property>
+		<property name="editActions">
+			<list>
+				<ref bean="saveAction" />
+				<ref bean="saveAddAction" />
+				<ref bean="separatorAction" />
+				<ref bean="cancelAction" />
+			</list>
+		</property>
+		<property name="model" ref="baseinfoModel" />
+	</bean>
+
+	<bean id="assistantMenu" class="nc.funcnode.ui.action.MenuAction">
+		<property name="name">
+			<bean class="nc.ui.uif2.I18nFB ">
+				<property name="resDir" value="common" />
+				<property name="defaultValue" value="辅助功能" />
+				<property name="resId" value="UC001-0000137" />
+			</bean>
+		</property>
+		<property name="code" value="assistantMenu" />
+		<property name="actions">
+			<list>
+				<ref bean="createVersionAction" />
+				<ref bean="accessoryAction"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="wuliaotuisong" class="nc.ui.bd.material.config.WLSaveAfter">
+		<property name="model" ref="baseinfoModel" />
+		<property name="editor" ref="baseinfoEditor" />
+		<property name="code" value="tuisong" />
+	</bean>
+</beans>

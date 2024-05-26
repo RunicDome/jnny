@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<import resource="supplier_config_base.xml"/>	
+
+	<bean id="baseinfoListViewActions"
+		class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="baseinfoListView" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="list_baseinfoaddaction" />
+				<ref bean="list_baseinfoeditaction" />
+				<ref bean="list_baseinfodeleteaction" />
+				<ref bean="list_copyaddaction" />
+				<ref bean="batchupdategroupaction" />
+				<ref bean="separatorAction" />
+				<ref bean="list_searchAction" />
+				<ref bean="list_refreshAction" />
+				<ref bean="filterAction" />
+				<ref bean="separatorAction" />
+				<ref bean="assignActionGroup" />
+				<ref bean="bankaccaction" />
+				<ref bean="supaddressAction"/>
+				<ref bean="list_approveActionGroup" />
+				<ref bean="list_entireFreezeActionGroup" />
+				<ref bean="list_enablegroupaction" />
+				<ref bean="assistantFuncMenu"/>
+				<ref bean="separatorAction" />
+				<ref bean="browseByOrgAction" />
+				<ref bean="orgvisitAction" />
+				<ref bean="associateSupPfAction"/>
+				<ref bean="separatorAction" />
+				<ref bean="list_printActionGroup" />
+				<ref bean="tuisong" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="baseinfoCardViewActions"
+		class="nc.ui.uif2.actions.StandAloneToftPanelActionContainer">
+		<constructor-arg>
+			<ref bean="baseinfoCardView" />
+		</constructor-arg>
+		<property name="actions">
+			<list>
+				<ref bean="list_baseinfoaddaction" />
+				<ref bean="list_baseinfoeditaction" />
+				<ref bean="list_baseinfodeleteaction" />
+				<ref bean="list_copyaddaction" />
+				<ref bean="batchupdategroupaction" />
+				<ref bean="separatorAction" />
+				<ref bean="list_searchAction" />
+				<ref bean="card_refreshAction" />
+				<ref bean="separatorAction" />
+				<ref bean="assignActionGroup" />
+				<ref bean="bankaccaction" />
+				<ref bean="supaddressAction"/>
+				<ref bean="card_approveActionGroup" />
+				<ref bean="card_entireFreezeActionGroup" />
+				<ref bean="card_enableActionGroup" />
+				<ref bean="assistantFuncMenu"/>
+				<ref bean="separatorAction" />
+				<ref bean="browseByOrgAction" />
+				<ref bean="orgvisitAction"/>
+				<ref bean="associateSupPfAction"/>
+				<ref bean="separatorAction" />
+				<ref bean="card_printActionGroup" />
+			</list>
+		</property>
+		<property name="editActions">
+			<list>
+				<ref bean="card_baseinfosaveaction" />
+				<ref bean="card_saveaddAction" />
+				<ref bean="separatorAction" />
+				<ref bean="card_baseinfocancelaction" />
+			</list>
+		</property>
+		<property name="model" ref="baseinfoModel" />
+	</bean>
+	<!-- 自己的按钮 -->
+   	<bean id="tuisong" class="nc.ui.bd.supplier.action.GYSTSDCAction">
+   		<property name="model" ref="baseinfoModel"></property>
+		<property name="editor" ref="baseinfoCardView"></property>
+		
+   	</bean>
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="queryAction" class="nc.ui.pubapp.billref.src.action.QueryAction">
+		<property name="refContext" ref="refContext"></property>
+	</bean>
+	<!-- 转单参照单据信息 -->
+	<bean id="refInfo" class="nc.ui.pubapp.billref.src.RefInfo">
+		<property name="headVO">
+			<bean class="nc.vo.pm.feebalance.PmFeebalanceHVO">
+			</bean>
+		</property>
+		<property name="bodyVO">
+			<bean class="nc.vo.pm.feebalance.PmFeebalanceBVO">
+			</bean>
+		</property>
+		<property name="billVO">
+			<bean class="nc.vo.pm.feebalance.AggPmFeebalance">
+			</bean>
+		</property>
+		<property name="viewVO">
+			<bean class="nc.vo.pm.feebalance.PmFeeBalanceViewVO">
+			</bean>
+		</property>
+		<property name="billNodeKey" value="4Z01TO4Z05"></property>
+		<property name="billViewNodeKey" value="4Z01TO4Z05"></property>
+<!-- 单据查询服务 nc.ui.pubapp.uif2app.model.IQueryService -->
+		<property name="queryService">
+			<bean class="nc.ui.pm.PmFeeBalance.billref.m4Z01To4Z05.QueryService4Z01To4Z05">
+			</bean>
+		</property>
+	</bean>
+
+</beans>

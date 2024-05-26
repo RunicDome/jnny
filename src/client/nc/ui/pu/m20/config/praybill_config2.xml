@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 请购推送供应商平台 -->
+   	<bean id="pushsupplier"  class="nc.ui.pu.m20.config.PushSupplierPlatform">
+   		<!-- model、editor属性名与按钮类对应  -->
+   		<property name="model" ref="manageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+		<property name="code" value="begin"/>
+   	</bean>
+   	
+   	<bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+		<property name="actionContainer" ref="actionsOfList" />
+		<property name="actionType" value="notedit" />
+		<property name="target" ref="queryAction" />
+		<property name="pos" value="after" />
+		<property name="action" ref="pushsupplier" />
+	</bean>
+	
+	<bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+		<property name="actionContainer" ref="actionsOfCard" />
+		<property name="actionType" value="notedit" />
+		<property name="target" ref="queryAction" />
+		<property name="pos" value="after" />
+		<property name="action" ref="pushsupplier" />
+	</bean>
+</beans>

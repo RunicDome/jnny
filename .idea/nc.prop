@@ -1,0 +1,25 @@
+#update file
+#Sun May 26 17:06:34 HKT 2024
+GLOBAL_HOTKEY_F3_RUN=\u6CA1\u6709\u914D\u7F6EGLOBAL_HOTKEY_F3_RUN\u547D\u4EE4\u5728IDEA .idea\u7684nc.propertis\u4E2D
+GLOBAL_HOTKEY_F4_RUN=\u6CA1\u6709\u914D\u7F6EGLOBAL_HOTKEY_F3_RUN\u547D\u4EE4\u5728IDEA .idea\u7684nc.propertis\u4E2D
+buildAfterNCCodeCheck=false
+clientip=127.0.0.1
+clientport=80
+close_client_copy=false
+data_source_index=0
+deleteDir=true
+enableSubResultSet=true
+exportResources=true
+exportSql=true
+filtersql=true
+format4Ygj=true
+includeDeletes=false
+libScope=Provided
+nc.version=
+onleyFullSql=true
+reNpmBuild=true
+reWriteSourceFile=false
+rebuildsql=false
+selectExport=false
+what_new_showed=Y
+zip=true

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="listActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printOperateActionGroup_List" />
+        <property name="pos" value="after" />
+        <property name="action" ref="yxbs" />
+    </bean>
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="cardActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printOperateActionGroup" />
+        <property name="pos" value="after" />
+        <property name="action" ref="yxbs" />
+    </bean>
+    <!-- 流程驳回 -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="listActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printOperateActionGroup_List" />
+        <property name="pos" value="after" />
+        <property name="action" ref="flowreject" />
+    </bean>
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="cardActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printOperateActionGroup" />
+        <property name="pos" value="after" />
+        <property name="action" ref="flowreject" />
+    </bean>
+    <!-- 修改附件张数 -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="listActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printOperateActionGroup_List" />
+        <property name="pos" value="after" />
+        <property name="action" ref="fjzs" />
+    </bean>
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="cardActions" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printOperateActionGroup" />
+        <property name="pos" value="after" />
+        <property name="action" ref="fjzs" />
+    </bean>
+	<!-- 影像补扫 -->
+	<bean id="yxbs" class="nc.ui.arap.action.YSDYXBSAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+	</bean>
+	<!-- 流程驳回 -->
+	<bean id="flowreject" class="nc.ui.arap.action.YSDRejectAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+	</bean>
+	<!-- 附件张数 -->
+	<bean id="fjzs" class="nc.ui.arap.action.YSDFJZSAction">
+		<property name="model" ref="ManageAppModel" />
+		<property name="editor" ref="billFormEditor" />
+	</bean>
+</beans>

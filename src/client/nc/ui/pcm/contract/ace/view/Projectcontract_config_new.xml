@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- xbx添加付款单 列表 -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="actionsOfList" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printMenuAction" />
+        <property name="pos" value="after" />
+        <property name="action" ref="importQDHT" />
+    </bean>
+	<!-- xbx添加付款单 卡片 -->
+    <bean class="nc.ui.pubapp.plugin.action.InsertActionInfo">
+        <property name="actionContainer" ref="actionsOfCard" />
+        <property name="actionType" value="notedit" />
+        <property name="target" ref="printMenuAction" />
+        <property name="pos" value="after" />
+        <property name="action" ref="importQDHT" />
+    </bean>
+	<!-- 推付款单 -->
+	<bean id="importQDHT" class="nc.ui.pcm.contract.action.GenaratePayBillByContract">
+		<property name="model" ref="manageAppModel" />
+		<property name="billForm" ref="billFormEditor" />
+		<property name="code" value="importQDHT" />
+	</bean>
+</beans>
