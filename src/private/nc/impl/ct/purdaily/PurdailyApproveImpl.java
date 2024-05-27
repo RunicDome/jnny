@@ -201,7 +201,8 @@ public class PurdailyApproveImpl implements IPurdailyApprove {
 			AggCtPuVO[] aggVO = new PurdailySendApproveAction().sendapprove(
 					vos, script);
 			senOaData(vos);
-			intoPortal(vos);
+			/*提交进共享屏蔽，上线再放开屏蔽*/
+			// intoPortal(vos);
 			return aggVO;
 
 			// AggCtPuVO[] aggVO=new
