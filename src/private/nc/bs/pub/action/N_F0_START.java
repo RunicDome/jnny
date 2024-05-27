@@ -467,6 +467,87 @@ public class N_F0_START extends N_F0_SAVE {
 				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
 						"fplx", fplx));
 			}
+			//运输工具种类
+			if(temp.getDef110()!= null){
+				String ysgjzl = (String) getHyPubBO().findColValue(
+						"bd_defdoc",
+						"name",
+						"nvl(dr,0) = 0 and pk_defdoc ='" + temp.getDef110()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"ysgjzl", ysgjzl));
+			}
+			//不动产地址(省)
+			if(temp.getDef114() != null){
+				String bdcdzsheng = (String) getHyPubBO().findColValue(
+						"bd_areacl",
+						"name",
+						"nvl(dr,0) = 0 and pk_areacl ='" + temp.getDef114()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"bdcdzsheng", bdcdzsheng));
+			}
+			//不动产地址(市)
+			if(temp.getDef115()!= null){
+				String bdcdzshi = (String) getHyPubBO().findColValue(
+						"bd_addressdoc",
+						"name",
+						"nvl(dr,0) = 0 and pk_addressdoc ='" + temp.getDef115()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"bdcdzshi", bdcdzshi));
+			}
+			//面积单位
+			if(temp.getDef118()!=null){
+				String mjdw = (String) getHyPubBO().findColValue(
+						"bd_defdoc",
+						"name",
+						"nvl(dr,0) = 0 and pk_defdoc ='" + temp.getDef118()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"mjdw", mjdw));
+			}
+			//农产品收购证件类型
+			if(temp.getDef132()!=null){
+				String ncpsgzjlx = (String) getHyPubBO().findColValue(
+						"bd_defdoc",
+						"name",
+						"nvl(dr,0) = 0 and pk_defdoc ='" + temp.getDef132()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"ncpsgzjlx", ncpsgzjlx));
+			}
+			//贸易方式
+			if(temp.getDef133()!=null){
+				String myfs = (String) getHyPubBO().findColValue(
+						"bd_defdoc",
+						"name",
+						"nvl(dr,0) = 0 and pk_defdoc ='" + temp.getDef133()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"myfs", myfs));
+			}
+			//币种
+			if(temp.getPk_currtype()!=null){
+				String bz = (String) getHyPubBO().findColValue(
+						"bd_currtype",
+						"name",
+						"nvl(dr,0) = 0 and pk_currtype ='" + temp.getPk_currtype()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"bz", bz));
+			}
+			//结算方式
+			if(temp.getPk_balatype()!=null){
+				String jsfs = (String) getHyPubBO().findColValue(
+						"bd_balatype",
+						"name",
+						"nvl(dr,0) = 0 and pk_balatype ='" + temp.getPk_balatype()
+								+ "'");
+				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
+						"jsfs", jsfs));
+			}
+
 			// 其他字段------end
 			Map<String, Object> workflowRequestTableFieldsMap = new HashMap<String, Object>();
 			workflowRequestTableFieldsMap.put("recordOrder", "0");
