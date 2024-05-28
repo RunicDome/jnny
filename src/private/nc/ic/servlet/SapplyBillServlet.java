@@ -153,6 +153,10 @@ public class SapplyBillServlet extends HttpServlet implements
 					return createMsg(false, "-1", errorMsg);
 				}
 				outVO.getParentVO().setCwarehouseid(cwarehouseid);
+				// 备品备件出库类型
+				if(headInfo.containsKey("ctrantypeid")){
+					outVO.getParentVO().setCtrantypeid((String) headInfo.get("ctrantypeid"));
+				}
 
 				MaterialOutBodyVO[] bodyVOs = outVO.getBodys();
 				List returnBodyVOList = new ArrayList();
@@ -212,7 +216,7 @@ public class SapplyBillServlet extends HttpServlet implements
 									+ "不允许为正数!申请数量:" + oldnassistnum + "";
 							return createMsg(false, "-1", errorMsg);
 						}
-						
+
 						if (MathTool.absCompareTo(oldnassistnum, nassistnum) < 0) {
 							errorMsg += "行号:" + bodyVO.getCrowno()
 									+ ",超出申请数量!申请数量:" + oldnassistnum
