@@ -86,9 +86,14 @@ public class BankListForCBSServlet extends HttpServlet implements
         InvocationInfoProxy.getInstance().setGroupId("0001A1100000000001QS");
         /* 通过传入参数-银行账号获取银行VO数据 */
         String accountNo = body.getString("accountNo");
-        BankAccbasVO bankAccbasVO = getBankVOBywhere(accountNo);
-        /* 返回数据 */
-        return createMsg(toDataJson(bankAccbasVO), "0", "ok");
+        /*正式删除*/
+        // TODO
+        if(accountNo.equals("240344764425") || accountNo.equals("376150100100003460") || accountNo.equals("8112501013201225507")) {
+            BankAccbasVO bankAccbasVO = getBankVOBywhere(accountNo);
+            /* 返回数据 */
+            return createMsg(toDataJson(bankAccbasVO), "0", "ok");
+        }
+        return null;
     }
 
     // 查询需推送CBS系统的银行列表单据

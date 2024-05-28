@@ -110,6 +110,8 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
                 wheresql += ")";
             }
         }
+        // TODO正式删除
+        wheresql+= " and curacc = '376150100100003460'";
         EbankDzdVO[] bankVOs = (EbankDzdVO[]) new HYPubBO().queryByCondition(EbankDzdVO.class,
                 wheresql);
         return bankVOs;
