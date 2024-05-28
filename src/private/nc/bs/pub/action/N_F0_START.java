@@ -97,11 +97,16 @@ public class N_F0_START extends N_F0_SAVE {
 					OaWorkFlowUtil.sendOaData(headData, bodyData, bill);
 				}
 			} else if ("1".equals(getDef2(hvo1.getPk_org()))) {
-				if (!"F0-Cxx-001".equals(transi_type)
-						&& !"F0-Cxx-002".equals(transi_type)) {
+				OAFlowVO oaVo = OaWorkFlowUtil.getOAFlowInfo(hvo.getPk_org(),
+						transi_type);
+//				if (!"F0-Cxx-001".equals(transi_type)
+//						&& !"F0-Cxx-002".equals(transi_type)) {
+				if(oaVo != null && oaVo.getIsdr() == 0){
 					// 热力
-					WorkFId = "144";
-					TableName = "formtable_main_197";
+//					WorkFId = "144";
+//					TableName = "formtable_main_197";
+					WorkFId = oaVo.getFlowid();
+					TableName = oaVo.getTablename();
 					// 获取主表数据
 					JSONArray headData = getNewMainMap(hvo1, customer);
 					// 获取子表数据
@@ -117,7 +122,7 @@ public class N_F0_START extends N_F0_SAVE {
 					// 接口获取oa流程ID
 					workFlowVO.setWorkflowId(OaWorkFlowUtil
 							.getOAFlowID(WorkFId));
-					workFlowVO.setWorkflowName("应收单");
+					workFlowVO.setWorkflowName(oaVo.getBilltypename());
 					WorkFlowBill bill = OaWorkFlowUtil
 							.getWorkFlowBill(workFlowVO);
 					bill.setDef4(hvo.getBillno());// 单据编号
@@ -547,6 +552,7 @@ public class N_F0_START extends N_F0_SAVE {
 				workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj(
 						"jsfs", jsfs));
 			}
+
 
 			// 其他字段------end
 			Map<String, Object> workflowRequestTableFieldsMap = new HashMap<String, Object>();
