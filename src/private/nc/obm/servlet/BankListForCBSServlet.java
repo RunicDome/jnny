@@ -93,9 +93,8 @@ public class BankListForCBSServlet extends HttpServlet implements
             /* 返回数据 */
             return createMsg(toDataJson(bankAccbasVO), "0", "ok");
         }
-        return null;
+        return createMsg(null, "-1", "查询失败！");
     }
-
     // 查询需推送CBS系统的银行列表单据
     private BankAccbasVO getBankVOBywhere(String accnum)
             throws BusinessException {

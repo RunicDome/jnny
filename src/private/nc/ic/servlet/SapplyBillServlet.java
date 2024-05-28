@@ -155,6 +155,7 @@ public class SapplyBillServlet extends HttpServlet implements
 				outVO.getParentVO().setCwarehouseid(cwarehouseid);
 				// 备品备件出库类型
 				if(headInfo.containsKey("ctrantypeid")){
+					outVO.getParentVO().setVtrantypecode((String) headInfo.get("ctrantypeid"));
 					outVO.getParentVO().setCtrantypeid((String) headInfo.get("ctrantypeid"));
 				}
 

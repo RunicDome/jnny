@@ -77,7 +77,6 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
         }
         System.out.println("=================" + request);
         res.getWriter().write(request);// 输出body
-        return;
     }
 
     private String getYHTransDetailsInfo(JSONObject body)
@@ -97,7 +96,7 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
         String startDate = body.getString("startDate");
         /* 结束日期 格式为yyyy-mm-dd */
         String endDate = body.getString("endDate");
-        String wheresql = " where trans_date >= '" + startDate
+        String wheresql = " trans_date >= '" + startDate
                 + "' and trans_date <= '" + endDate + "' ";
         if (body.containsKey("accountNoList")) {
             JSONArray accountNoList = body.getJSONArray("accountNoList");

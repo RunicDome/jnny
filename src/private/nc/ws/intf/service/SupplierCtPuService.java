@@ -32,7 +32,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 /**
  * 供应商平台请购单生成采购合同
- * 
+ *
  * @author jor
  */
 public class SupplierCtPuService extends BarcodeService {
@@ -151,6 +151,10 @@ public class SupplierCtPuService extends BarcodeService {
 						}
 					}else{
 						bvo.setNtaxrate(ntaxrate);
+					}
+					// 税码
+					if(qgmxJson.has("ctaxcodeid")){
+						bvo.setCtaxcodeid(qgmxJson.getString("ctaxcodeid"));
 					}
 					CtPriceCalculator cpcalt = new CtPriceCalculator();
 					cpcalt.relationCalculatePrice(bvo);
