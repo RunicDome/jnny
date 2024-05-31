@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="gb2312"?>
+<module name="obm">
+	<public>
+		<component accessProtected="false" name="BankYHYEForCBSServlet" remote="true" singleton="true"
+			tx="NONE">
+			<implementation>nc.obm.servlet.BankYHYEForCBSServlet</implementation>
+		</component>
+	</public>
+</module>
