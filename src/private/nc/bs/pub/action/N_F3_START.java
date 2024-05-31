@@ -337,24 +337,34 @@ public class N_F3_START extends N_F3_SAVE {
                         "skyhzh", skyhzh));
             }
             /* 换热站 */
-            if (parentVO.getDef23() != null) {
+            if (temp.getDef23() != null) {
                 String hrz = (String) getHyPubBO().findColValue(
                         "bd_defdoc",
                         "name",
-                        "nvl(dr,0) = 0 and pk_defdoc = '" + parentVO.getDef23()
+                        "nvl(dr,0) = 0 and pk_defdoc = '" + temp.getDef23()
                                 + "'");
                 workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj("hrz",
                         hrz));
             }
             /* 线别 */
-            if (parentVO.getDef71() != null) {
+            if (temp.getDef71() != null) {
                 String xb = (String) getHyPubBO().findColValue(
                         "bd_defdoc",
                         "name",
-                        "nvl(dr,0) = 0 and pk_defdoc = '" + parentVO.getDef71()
+                        "nvl(dr,0) = 0 and pk_defdoc = '" + temp.getDef71()
                                 + "'");
                 workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj("xb",
                         xb));
+            }
+            /* 网损量 */
+            if (temp.getDef72() != null) {
+                String wsl = (String) getHyPubBO().findColValue(
+                        "bd_defdoc",
+                        "name",
+                        "nvl(dr,0) = 0 and pk_defdoc = '" + temp.getDef72()
+                                + "'");
+                workflowRequestTableFields.add(OaWorkFlowUtil.listAddObj("wsl",
+                        wsl));
             }
             // 付款性质
             if (temp.getPrepay() != null) {
