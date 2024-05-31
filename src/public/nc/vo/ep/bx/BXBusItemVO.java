@@ -14,10 +14,10 @@ import nc.vo.pubapp.pattern.model.meta.entity.vo.VOMetaFactory;
 
 /**
  * 借款报销表体业务信息VO
- * 
+ *
  * @author twei modified by chendya since v6.1
  *         将财务行VO删除，将财务行所有有用字段移植到业务行(报销单早些时候的版本是没有表体行的，所以特意构造了财务行金额传结算，会计平台，预算等)
- * 
+ *
  *         nc.vo.ep.bx.BXBusItemVO
  */
 public class BXBusItemVO extends SuperVO {
@@ -30,11 +30,11 @@ public class BXBusItemVO extends SuperVO {
 							 * @res "表体下列字段不能为空:\n"
 							 */;
     }
-	
+
 	private String pk_fprelation;
-	
+
 	private String fpdm;
-	
+
 	private String fphm;
 
 	// ---------------------------------begin added by lvhj
@@ -46,16 +46,16 @@ public class BXBusItemVO extends SuperVO {
 	 * 回写费用申请单-冲销明细数据包装使用，冲销行中的报销单明细pk
 	 */
 	private String bx_busitemPK;
-	
+
 
 	// 增加项目管理、责任会计支持的固定业务字段---------------------------------
 
 	public static final String PK_FPRELATION = "pk_fprelation";
-	
+
 	public static final String PK_FPDM = "fpdm";
-	
+
 	public static final String PK_FPHM = "fphm";
-	
+
 	/**
 	 * 成本中心
 	 */
@@ -96,7 +96,7 @@ public class BXBusItemVO extends SuperVO {
 	 * 来源类型，默认为费用申请单
 	 */
 	public static final String SRCTYPE = "srctype";
-	
+
 	public static final String FCTNO = "fctno";
 	private String pk_resacostcenter;// 成本中心
 	private String pk_checkele; // 核算要素
@@ -116,17 +116,17 @@ public class BXBusItemVO extends SuperVO {
 	private String freecust ; //散户
 	private String freeaccount;//散户银行帐户
 	private String fctno;//合同号
-	
-	
+
+
 	// CRM使用，用来控制生成的申请单
 	private java.lang.String pk_crmdetail;
-	
+
 	public static final String PK_CRMDETAIL = "pk_crmdetail";
-	
+
 	public String getFctno(){
 		return fctno;
 	}
-	
+
 	public void setFctno(String fctno){
 		this.fctno = fctno;
 	}
@@ -253,7 +253,7 @@ public class BXBusItemVO extends SuperVO {
 	public static final String FYYBJE = "fyybje";
 	public static final String FYBBJE = "fybbje";
 
-	
+
 	//65-ehp1新增加字段
 	public static final String TAX_AMOUNT = "tax_amount";
 	public static final String VAT_AMOUNT = "vat_amount";
@@ -267,7 +267,7 @@ public class BXBusItemVO extends SuperVO {
 	public static final String GLOBALTAX_AMOUNT = "globaltax_amount";
 	public static final String GLOBALVAT_AMOUNT = "globalvat_amount";
 	public static final String GLOBALTNI_AMOUNT = "globaltni_amount";
-	
+
 	/**
 	 * 全局本币金额
 	 */
@@ -313,7 +313,7 @@ public class BXBusItemVO extends SuperVO {
 	 * 结算信息表体前缀
 	 */
 	public static String SETTLE_BODY_PREFIX = "fb.";
-	
+
 	/**
 	 * 结算信息表体前缀
 	 */
@@ -324,7 +324,7 @@ public class BXBusItemVO extends SuperVO {
 	public String jobid;
 	public String cashitem;
 	public String pk_proline;
-	
+
 	public String getPk_proline() {
 		return pk_proline;
 	}
@@ -379,8 +379,8 @@ public class BXBusItemVO extends SuperVO {
 	 * 本币金额
 	 */
 	public UFDouble bbje;
-	
-	
+
+
 	//65-ehp1新增加字段
 	public UFDouble tax_amount;//税金金额
 	public UFDouble vat_amount;//含税金额
@@ -534,7 +534,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGlobalbbje() {
@@ -543,7 +543,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGlobalbbje
 	 *            UFDouble
 	 */
@@ -553,7 +553,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalbbye的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGlobalbbye() {
@@ -562,7 +562,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalbbye的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGlobalbbye
 	 *            UFDouble
 	 */
@@ -572,7 +572,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalhkbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGlobalhkbbje() {
@@ -581,7 +581,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalhkbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGlobalhkbbje
 	 *            UFDouble
 	 */
@@ -591,7 +591,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalzfbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGlobalzfbbje() {
@@ -600,7 +600,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalzfbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGlobalzfbbje
 	 *            UFDouble
 	 */
@@ -610,7 +610,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalcjkbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGlobalcjkbbje() {
@@ -619,7 +619,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性globalcjkbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGlobalcjkbbje
 	 *            UFDouble
 	 */
@@ -629,7 +629,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGroupbbje() {
@@ -638,7 +638,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGroupbbje
 	 *            UFDouble
 	 */
@@ -648,7 +648,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupbbye的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGroupbbye() {
@@ -657,7 +657,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupbbye的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGroupbbye
 	 *            UFDouble
 	 */
@@ -667,7 +667,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性grouphkbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGrouphkbbje() {
@@ -676,7 +676,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性grouphkbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGrouphkbbje
 	 *            UFDouble
 	 */
@@ -686,7 +686,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupzfbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGroupzfbbje() {
@@ -695,7 +695,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupzfbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGroupzfbbje
 	 *            UFDouble
 	 */
@@ -705,7 +705,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupcjkbbje的Getter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @return UFDouble
 	 */
 	public UFDouble getGroupcjkbbje() {
@@ -714,7 +714,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性groupcjkbbje的Setter方法. 创建日期:2010-01-18 10:54:54
-	 * 
+	 *
 	 * @param newGroupcjkbbje
 	 *            UFDouble
 	 */
@@ -960,7 +960,7 @@ public class BXBusItemVO extends SuperVO {
 	public static final String SZXMID = "szxmid";
 
 	public static final String ROWNO = "rowno";
-	
+
 	public static final String PK_PROLINE = "pk_proline";
 	public static final String PK_BRAND = "pk_brand";
 	public static final String DWBM = "dwbm";
@@ -1034,9 +1034,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem8的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return Object
 	 */
 	public String getDefitem8() {
@@ -1045,9 +1045,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem8的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem8
 	 *            String
 	 */
@@ -1058,9 +1058,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem2的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem2() {
@@ -1069,9 +1069,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem2的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem2
 	 *            String
 	 */
@@ -1082,9 +1082,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem21的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem21() {
@@ -1093,9 +1093,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem21的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem21
 	 *            String
 	 */
@@ -1105,9 +1105,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem36的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem36() {
@@ -1116,9 +1116,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem36的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem36
 	 *            String
 	 */
@@ -1128,9 +1128,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem40的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem40() {
@@ -1139,9 +1139,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem40的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem40
 	 *            String
 	 */
@@ -1152,9 +1152,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem23的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem23() {
@@ -1163,9 +1163,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem23的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem23
 	 *            String
 	 */
@@ -1175,9 +1175,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem12的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem12() {
@@ -1186,9 +1186,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem12的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem12
 	 *            String
 	 */
@@ -1199,9 +1199,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem31的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem31() {
@@ -1210,9 +1210,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem31的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem31
 	 *            String
 	 */
@@ -1222,9 +1222,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem34的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem34() {
@@ -1233,9 +1233,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem34的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem34
 	 *            String
 	 */
@@ -1245,9 +1245,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem3的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem3() {
@@ -1256,9 +1256,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem3的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem3
 	 *            String
 	 */
@@ -1268,9 +1268,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性tablecode的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getTablecode() {
@@ -1279,9 +1279,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性tablecode的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newTablecode
 	 *            String
 	 */
@@ -1291,9 +1291,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem11的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem11() {
@@ -1302,9 +1302,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem11的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem11
 	 *            String
 	 */
@@ -1314,9 +1314,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem17的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem17() {
@@ -1325,9 +1325,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem17的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem17
 	 *            String
 	 */
@@ -1337,9 +1337,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem28的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem28() {
@@ -1348,9 +1348,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem28的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem28
 	 *            String
 	 */
@@ -1360,9 +1360,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem33的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem33() {
@@ -1371,9 +1371,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem33的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem33
 	 *            String
 	 */
@@ -1383,9 +1383,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem48的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem48() {
@@ -1394,9 +1394,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem48的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem48
 	 *            String
 	 */
@@ -1406,9 +1406,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性pk_jkbxzb的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getPk_jkbx() {
@@ -1417,9 +1417,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性pk_jkbxzb的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newPk_jkbxzb
 	 *            String
 	 */
@@ -1429,9 +1429,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem45的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem45() {
@@ -1440,9 +1440,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem45的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem45
 	 *            String
 	 */
@@ -1452,9 +1452,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem1的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem1() {
@@ -1463,9 +1463,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem1的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem1
 	 *            String
 	 */
@@ -1475,9 +1475,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem50的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem50() {
@@ -1486,9 +1486,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem50的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem50
 	 *            String
 	 */
@@ -1498,9 +1498,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem42的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem42() {
@@ -1509,9 +1509,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem42的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem42
 	 *            String
 	 */
@@ -1521,9 +1521,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem35的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem35() {
@@ -1532,9 +1532,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem35的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem35
 	 *            String
 	 */
@@ -1544,9 +1544,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem30的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem30() {
@@ -1555,9 +1555,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem30的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem30
 	 *            String
 	 */
@@ -1567,9 +1567,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem41的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem41() {
@@ -1578,9 +1578,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem41的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem41
 	 *            String
 	 */
@@ -1590,9 +1590,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem9的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem9() {
@@ -1601,9 +1601,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem9的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem9
 	 *            String
 	 */
@@ -1613,9 +1613,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem29的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem29() {
@@ -1624,9 +1624,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem29的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem29
 	 *            String
 	 */
@@ -1636,9 +1636,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem5的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem5() {
@@ -1647,9 +1647,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem5的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem5
 	 *            String
 	 */
@@ -1659,9 +1659,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem19的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem19() {
@@ -1670,9 +1670,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem19的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem19
 	 *            String
 	 */
@@ -1682,9 +1682,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem14的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem14() {
@@ -1693,9 +1693,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem14的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem14
 	 *            String
 	 */
@@ -1705,9 +1705,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem49的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem49() {
@@ -1716,9 +1716,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem49的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem49
 	 *            String
 	 */
@@ -1728,9 +1728,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem26的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem26() {
@@ -1739,9 +1739,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem26的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem26
 	 *            String
 	 */
@@ -1751,9 +1751,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem43的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem43() {
@@ -1762,9 +1762,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem43的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem43
 	 *            String
 	 */
@@ -1774,9 +1774,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem46的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem46() {
@@ -1785,9 +1785,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem46的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem46
 	 *            String
 	 */
@@ -1797,9 +1797,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem4的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem4() {
@@ -1808,9 +1808,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem4的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem4
 	 *            String
 	 */
@@ -1820,9 +1820,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem24的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem24() {
@@ -1831,9 +1831,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem24的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem24
 	 *            String
 	 */
@@ -1843,9 +1843,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem16的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem16() {
@@ -1854,9 +1854,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem16的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem16
 	 *            String
 	 */
@@ -1866,9 +1866,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem38的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem38() {
@@ -1877,9 +1877,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem38的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem38
 	 *            String
 	 */
@@ -1889,9 +1889,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem27的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem27() {
@@ -1900,9 +1900,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem27的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem27
 	 *            String
 	 */
@@ -1912,9 +1912,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem22的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem22() {
@@ -1923,9 +1923,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem22的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem22
 	 *            String
 	 */
@@ -1935,9 +1935,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem6的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem6() {
@@ -1946,9 +1946,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem6的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem6
 	 *            String
 	 */
@@ -1958,9 +1958,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性pk_bxbusitem的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getPk_busitem() {
@@ -1969,9 +1969,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性pk_bxbusitem的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newPk_bxbusitem
 	 *            String
 	 */
@@ -1981,9 +1981,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem39的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem39() {
@@ -1992,9 +1992,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem39的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem39
 	 *            String
 	 */
@@ -2005,9 +2005,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem47的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem47() {
@@ -2016,9 +2016,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem47的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem47
 	 *            String
 	 */
@@ -2028,9 +2028,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem25的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem25() {
@@ -2039,9 +2039,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem25的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem25
 	 *            String
 	 */
@@ -2051,9 +2051,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem44的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem44() {
@@ -2062,9 +2062,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem44的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem44
 	 *            String
 	 */
@@ -2074,9 +2074,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem18的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem18() {
@@ -2085,9 +2085,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem18的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem18
 	 *            String
 	 */
@@ -2097,9 +2097,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem10的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem10() {
@@ -2108,9 +2108,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem10的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem10
 	 *            String
 	 */
@@ -2120,9 +2120,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem32的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem32() {
@@ -2131,9 +2131,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem32的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem32
 	 *            String
 	 */
@@ -2143,9 +2143,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem37的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem37() {
@@ -2154,9 +2154,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem37的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem37
 	 *            String
 	 */
@@ -2166,9 +2166,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem15的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem15() {
@@ -2177,9 +2177,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem15的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem15
 	 *            String
 	 */
@@ -2189,9 +2189,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem20的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem20() {
@@ -2200,9 +2200,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem20的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem20
 	 *            String
 	 */
@@ -2212,9 +2212,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem13的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem13() {
@@ -2223,9 +2223,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem13的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem13
 	 *            String
 	 */
@@ -2235,9 +2235,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem7的Getter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getDefitem7() {
@@ -2246,9 +2246,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 属性defitem7的Setter方法.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newDefitem7
 	 *            String
 	 */
@@ -2258,9 +2258,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 验证对象各属性之间的数据逻辑正确性.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @exception nc.vo.pub.ValidationException
 	 *                如果验证失败,抛出 ValidationException,对错误进行解释.
 	 */
@@ -2293,7 +2293,7 @@ public class BXBusItemVO extends SuperVO {
 	 * 取得父VO主键字段.
 	 * <p>
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return java.lang.Object
 	 */
 	public java.lang.String getParentPKFieldName() {
@@ -2305,7 +2305,7 @@ public class BXBusItemVO extends SuperVO {
 	 * 取得表主键.
 	 * <p>
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return java.lang.Object
 	 */
 	public java.lang.String getPKFieldName() {
@@ -2317,7 +2317,7 @@ public class BXBusItemVO extends SuperVO {
 	 * 返回表名称.
 	 * <p>
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return java.lang.Object
 	 */
 	public java.lang.String getTableName() {
@@ -2327,13 +2327,13 @@ public class BXBusItemVO extends SuperVO {
 	public static java.lang.String getDefaultTableName() {
 		return "er_busitem";
 	}
-	
+
 	@Override
     public IVOMeta getMetaData() {
-      IVOMeta meta = VOMetaFactory.getInstance().getVOMeta("erm.er_busitem"); 
+      IVOMeta meta = VOMetaFactory.getInstance().getVOMeta("erm.er_busitem");
       return meta;
     }
-	
+
 	@Override
 	public void setAttributeValue(String name, Object value) {
 		if (BeanHelper.getMethod(this, name) != null) {
@@ -2348,12 +2348,12 @@ public class BXBusItemVO extends SuperVO {
 			super.setAttributeValue(name, value);
 		}
 	}
-	
+
 	//shiwla 手机端进行vo转换用
 	public void setJsonAttributeValue(String name, Object value) {
 		super.setAttributeValue(name, value);
 	}
-	
+
 	@Override
 	public Object getAttributeValue(String key) {
 		// 如果包含结算信息字段，从结算vo中取值
@@ -2363,20 +2363,20 @@ public class BXBusItemVO extends SuperVO {
 				return getSettleBodyVO().getAttributeValue(atrr);
 			}
 		}
-		
+
 		Object result = null;
 		if(BeanHelper.getMethod(this, key) != null){
 			result = BeanHelper.getProperty(this, key);
 		}else{
 			result = super.getAttributeValue(key);
 		}
-		
+
 		return result;
 	}
 
 	/**
 	 * 按照默认方式创建构造子.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
 	 */
 	public BXBusItemVO() {
@@ -2385,9 +2385,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 使用主键进行初始化的构造子.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newPk_bxbusitem
 	 *            主键值
 	 */
@@ -2398,9 +2398,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 返回对象标识,用来唯一定位对象.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return Object
 	 */
 	public String getPrimaryKey() {
@@ -2409,9 +2409,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 设置对象标识,用来唯一定位对象.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @param newPk_bxbusitem
 	 *            Object
 	 */
@@ -2421,9 +2421,9 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 返回数值对象的显示名称.
-	 * 
+	 *
 	 * 创建日期:2007-6-13
-	 * 
+	 *
 	 * @return java.lang.Object 返回数值对象的显示名称.
 	 */
 	public String getEntityName() {
@@ -2448,7 +2448,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 返回表体集团本币金额字段
-	 * 
+	 *
 	 * @author chendya
 	 * @return
 	 */
@@ -2457,9 +2457,9 @@ public class BXBusItemVO extends SuperVO {
 	}
 
 	/**
-	 * 
+	 *
 	 * 返回表体全局本币金额字段
-	 * 
+	 *
 	 * @author chendya
 	 * @return
 	 */
@@ -2468,9 +2468,9 @@ public class BXBusItemVO extends SuperVO {
 	}
 
 	/**
-	 * 
+	 *
 	 * 返回表体组织本币金额字段
-	 * 
+	 *
 	 * @author chendya
 	 * @return
 	 */
@@ -2480,7 +2480,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 返回原币金额字段
-	 * 
+	 *
 	 * @return
 	 */
 	public static String[] getYbjeField() {
@@ -2489,7 +2489,7 @@ public class BXBusItemVO extends SuperVO {
 
 	/**
 	 * 为精度设置操作提供的方法，返回表体金额字段的key值
-	 * 
+	 *
 	 * @return
 	 */
 	public static String[] getBodyJeFieldForDecimal() {
@@ -2688,32 +2688,32 @@ public class BXBusItemVO extends SuperVO {
 	public void setGlobaltni_amount(UFDouble globaltni_amount) {
 		this.globaltni_amount = globaltni_amount;
 	}
-	
+
 	//SSC新增字段
 	private String bzbm;//币种
-	
+
 	private UFDouble bbhl;//本币汇率
-	
+
 	private UFDouble groupbbhl;//集团本币汇率
-	
+
 	private UFDouble globalbbhl;//全局本币汇率
-	
+
 	private UFDouble tax_rate;//税率
-	
+
 	private String sfcb;//是否超标
-	
+
 	public static final String BZBM = "bzbm";//币种编码
-	
+
 	public static final String BBHL = "bbhl";//本币汇率
-	
+
 	public static final String GROUPBBHL = "groupbbhl";//集团本币汇率
-	
+
 	public static final String GLOBALBBHL = "globalbbhl";//全局本币汇率
 
 	public static final String TAX_RATE = "tax_rate";//税率
-	
+
 	public static final String SFCB = "sfcb";//是否超标
-	
+
 	public String getBzbm() {
 		return bzbm;
 	}
@@ -2785,7 +2785,7 @@ public class BXBusItemVO extends SuperVO {
 	public void setFphm(String fphm) {
 		this.fphm = fphm;
 	}
-	
+
 	public static final String DEFITEM51 = "defitem51";
 	public static final String DEFITEM52 = "defitem52";
 	public static final String DEFITEM53 = "defitem53";
@@ -2816,7 +2816,7 @@ public class BXBusItemVO extends SuperVO {
 	public static final String DEFITEM78 = "defitem78";
 	public static final String DEFITEM79 = "defitem79";
 	public static final String DEFITEM80 = "defitem80";
-	
+
 	public static final String DEFITEM81 = "defitem81";
 	public static final String DEFITEM82 = "defitem82";
 	public static final String DEFITEM83 = "defitem83";
@@ -2847,7 +2847,588 @@ public class BXBusItemVO extends SuperVO {
 	public static final String DEFITEM108 = "defitem108";
 	public static final String DEFITEM109 = "defitem109";
 	public static final String DEFITEM110 = "defitem110";
-	
+	public static final String DEFITEM111 = "defitem111";
+	public static final String DEFITEM112 = "defitem112";
+	public static final String DEFITEM113 = "defitem113";
+	public static final String DEFITEM114 = "defitem114";
+	public static final String DEFITEM115 = "defitem115";
+	public static final String DEFITEM116 = "defitem116";
+	public static final String DEFITEM117 = "defitem117";
+	public static final String DEFITEM118 = "defitem118";
+	public static final String DEFITEM119 = "defitem119";
+	public static final String DEFITEM120 = "defitem120";
+	public static final String DEFITEM121 = "defitem121";
+	public static final String DEFITEM122 = "defitem122";
+	public static final String DEFITEM123 = "defitem123";
+	public static final String DEFITEM124 = "defitem124";
+	public static final String DEFITEM125 = "defitem125";
+	public static final String DEFITEM126 = "defitem126";
+	public static final String DEFITEM127 = "defitem127";
+	public static final String DEFITEM128 = "defitem128";
+	public static final String DEFITEM129 = "defitem129";
+
+	public String getDefitem131() {
+		return defitem131;
+	}
+
+	public void setDefitem131(String defitem131) {
+		this.defitem131 = defitem131;
+	}
+
+	public String getDefitem132() {
+		return defitem132;
+	}
+
+	public void setDefitem132(String defitem132) {
+		this.defitem132 = defitem132;
+	}
+
+	public String getDefitem133() {
+		return defitem133;
+	}
+
+	public void setDefitem133(String defitem133) {
+		this.defitem133 = defitem133;
+	}
+
+	public String getDefitem134() {
+		return defitem134;
+	}
+
+	public void setDefitem134(String defitem134) {
+		this.defitem134 = defitem134;
+	}
+
+	public String getDefitem135() {
+		return defitem135;
+	}
+
+	public void setDefitem135(String defitem135) {
+		this.defitem135 = defitem135;
+	}
+
+	public String getDefitem136() {
+		return defitem136;
+	}
+
+	public void setDefitem136(String defitem136) {
+		this.defitem136 = defitem136;
+	}
+
+	public String getDefitem137() {
+		return defitem137;
+	}
+
+	public void setDefitem137(String defitem137) {
+		this.defitem137 = defitem137;
+	}
+
+	public String getDefitem138() {
+		return defitem138;
+	}
+
+	public void setDefitem138(String defitem138) {
+		this.defitem138 = defitem138;
+	}
+
+	public String getDefitem139() {
+		return defitem139;
+	}
+
+	public void setDefitem139(String defitem139) {
+		this.defitem139 = defitem139;
+	}
+
+	public String getDefitem140() {
+		return defitem140;
+	}
+
+	public void setDefitem140(String defitem140) {
+		this.defitem140 = defitem140;
+	}
+
+	public String getDefitem141() {
+		return defitem141;
+	}
+
+	public void setDefitem141(String defitem141) {
+		this.defitem141 = defitem141;
+	}
+
+	public String getDefitem142() {
+		return defitem142;
+	}
+
+	public void setDefitem142(String defitem142) {
+		this.defitem142 = defitem142;
+	}
+
+	public String getDefitem143() {
+		return defitem143;
+	}
+
+	public void setDefitem143(String defitem143) {
+		this.defitem143 = defitem143;
+	}
+
+	public String getDefitem144() {
+		return defitem144;
+	}
+
+	public void setDefitem144(String defitem144) {
+		this.defitem144 = defitem144;
+	}
+
+	public String getDefitem145() {
+		return defitem145;
+	}
+
+	public void setDefitem145(String defitem145) {
+		this.defitem145 = defitem145;
+	}
+
+	public String getDefitem146() {
+		return defitem146;
+	}
+
+	public void setDefitem146(String defitem146) {
+		this.defitem146 = defitem146;
+	}
+
+	public String getDefitem147() {
+		return defitem147;
+	}
+
+	public void setDefitem147(String defitem147) {
+		this.defitem147 = defitem147;
+	}
+
+	public String getDefitem148() {
+		return defitem148;
+	}
+
+	public void setDefitem148(String defitem148) {
+		this.defitem148 = defitem148;
+	}
+
+	public String getDefitem149() {
+		return defitem149;
+	}
+
+	public void setDefitem149(String defitem149) {
+		this.defitem149 = defitem149;
+	}
+
+	public String getDefitem150() {
+		return defitem150;
+	}
+
+	public void setDefitem150(String defitem150) {
+		this.defitem150 = defitem150;
+	}
+
+	public String getDefitem151() {
+		return defitem151;
+	}
+
+	public void setDefitem151(String defitem151) {
+		this.defitem151 = defitem151;
+	}
+
+	public String getDefitem152() {
+		return defitem152;
+	}
+
+	public void setDefitem152(String defitem152) {
+		this.defitem152 = defitem152;
+	}
+
+	public String getDefitem153() {
+		return defitem153;
+	}
+
+	public void setDefitem153(String defitem153) {
+		this.defitem153 = defitem153;
+	}
+
+	public String getDefitem154() {
+		return defitem154;
+	}
+
+	public void setDefitem154(String defitem154) {
+		this.defitem154 = defitem154;
+	}
+
+	public String getDefitem155() {
+		return defitem155;
+	}
+
+	public void setDefitem155(String defitem155) {
+		this.defitem155 = defitem155;
+	}
+
+	public String getDefitem156() {
+		return defitem156;
+	}
+
+	public void setDefitem156(String defitem156) {
+		this.defitem156 = defitem156;
+	}
+
+	public String getDefitem157() {
+		return defitem157;
+	}
+
+	public void setDefitem157(String defitem157) {
+		this.defitem157 = defitem157;
+	}
+
+	public String getDefitem158() {
+		return defitem158;
+	}
+
+	public void setDefitem158(String defitem158) {
+		this.defitem158 = defitem158;
+	}
+
+	public String getDefitem159() {
+		return defitem159;
+	}
+
+	public void setDefitem159(String defitem159) {
+		this.defitem159 = defitem159;
+	}
+
+	public String getDefitem160() {
+		return defitem160;
+	}
+
+	public void setDefitem160(String defitem160) {
+		this.defitem160 = defitem160;
+	}
+
+	public String getDefitem161() {
+		return defitem161;
+	}
+
+	public void setDefitem161(String defitem161) {
+		this.defitem161 = defitem161;
+	}
+
+	public String getDefitem162() {
+		return defitem162;
+	}
+
+	public void setDefitem162(String defitem162) {
+		this.defitem162 = defitem162;
+	}
+
+	public String getDefitem163() {
+		return defitem163;
+	}
+
+	public void setDefitem163(String defitem163) {
+		this.defitem163 = defitem163;
+	}
+
+	public String getDefitem164() {
+		return defitem164;
+	}
+
+	public void setDefitem164(String defitem164) {
+		this.defitem164 = defitem164;
+	}
+
+	public String getDefitem165() {
+		return defitem165;
+	}
+
+	public void setDefitem165(String defitem165) {
+		this.defitem165 = defitem165;
+	}
+
+	public String getDefitem166() {
+		return defitem166;
+	}
+
+	public void setDefitem166(String defitem166) {
+		this.defitem166 = defitem166;
+	}
+
+	public String getDefitem167() {
+		return defitem167;
+	}
+
+	public void setDefitem167(String defitem167) {
+		this.defitem167 = defitem167;
+	}
+
+	public String getDefitem168() {
+		return defitem168;
+	}
+
+	public void setDefitem168(String defitem168) {
+		this.defitem168 = defitem168;
+	}
+
+	public String getDefitem169() {
+		return defitem169;
+	}
+
+	public void setDefitem169(String defitem169) {
+		this.defitem169 = defitem169;
+	}
+
+	public String getDefitem170() {
+		return defitem170;
+	}
+
+	public void setDefitem170(String defitem170) {
+		this.defitem170 = defitem170;
+	}
+
+	public static final String DEFITEM130 = "defitem130";
+	public static final String DEFITEM131 = "defitem131";
+	public static final String DEFITEM132 = "defitem132";
+	public static final String DEFITEM133 = "defitem133";
+	public static final String DEFITEM134 = "defitem134";
+	public static final String DEFITEM135 = "defitem135";
+	public static final String DEFITEM136 = "defitem136";
+	public static final String DEFITEM137 = "defitem137";
+	public static final String DEFITEM138 = "defitem138";
+	public static final String DEFITEM139 = "defitem139";
+	public static final String DEFITEM140 = "defitem140";
+	public static final String DEFITEM141 = "defitem141";
+	public static final String DEFITEM142 = "defitem142";
+	public static final String DEFITEM143 = "defitem143";
+	public static final String DEFITEM144 = "defitem144";
+	public static final String DEFITEM145 = "defitem145";
+	public static final String DEFITEM146 = "defitem146";
+	public static final String DEFITEM147 = "defitem147";
+	public static final String DEFITEM148 = "defitem148";
+	public static final String DEFITEM149 = "defitem149";
+	public static final String DEFITEM150 = "defitem150";
+	public static final String DEFITEM151 = "defitem151";
+	public static final String DEFITEM152 = "defitem152";
+	public static final String DEFITEM153 = "defitem153";
+	public static final String DEFITEM154 = "defitem154";
+	public static final String DEFITEM155 = "defitem155";
+	public static final String DEFITEM156 = "defitem156";
+	public static final String DEFITEM157 = "defitem157";
+	public static final String DEFITEM158 = "defitem158";
+	public static final String DEFITEM159 = "defitem159";
+	public static final String DEFITEM160 = "defitem160";
+	public static final String DEFITEM161 = "defitem161";
+	public static final String DEFITEM162 = "defitem162";
+	public static final String DEFITEM163 = "defitem163";
+	public static final String DEFITEM164 = "defitem164";
+	public static final String DEFITEM165 = "defitem165";
+	public static final String DEFITEM166 = "defitem166";
+	public static final String DEFITEM167 = "defitem167";
+	public static final String DEFITEM168 = "defitem168";
+	public static final String DEFITEM169 = "defitem169";
+	public static final String DEFITEM170 = "defitem170";
+	public static final String DEFITEM171 = "defitem171";
+	public static final String DEFITEM172 = "defitem172";
+	public static final String DEFITEM173 = "defitem173";
+	public static final String DEFITEM174 = "defitem174";
+	public static final String DEFITEM175 = "defitem175";
+	public static final String DEFITEM176 = "defitem176";
+	public static final String DEFITEM177 = "defitem177";
+	public static final String DEFITEM178 = "defitem178";
+	public static final String DEFITEM179 = "defitem179";
+	public static final String DEFITEM180 = "defitem180";
+	public static final String DEFITEM181 = "defitem181";
+	public static final String DEFITEM182 = "defitem182";
+	public static final String DEFITEM183 = "defitem183";
+	public static final String DEFITEM184 = "defitem184";
+	public static final String DEFITEM185 = "defitem185";
+	public static final String DEFITEM186 = "defitem186";
+	public static final String DEFITEM187 = "defitem187";
+	public static final String DEFITEM188 = "defitem188";
+	public static final String DEFITEM189 = "defitem189";
+	public static final String DEFITEM190 = "defitem190";
+	public static final String DEFITEM191 = "defitem191";
+	public static final String DEFITEM192 = "defitem192";
+	public static final String DEFITEM193 = "defitem193";
+	public static final String DEFITEM194 = "defitem194";
+	public static final String DEFITEM195 = "defitem195";
+	public static final String DEFITEM196 = "defitem196";
+	public static final String DEFITEM197 = "defitem197";
+	public static final String DEFITEM198 = "defitem198";
+	public static final String DEFITEM199 = "defitem199";
+	public static final String DEFITEM200 = "defitem200";
+	public static final String DEFITEM201 = "defitem201";
+	public static final String DEFITEM202 = "defitem202";
+	public static final String DEFITEM203 = "defitem203";
+	public static final String DEFITEM204 = "defitem204";
+	public static final String DEFITEM205 = "defitem205";
+	public static final String DEFITEM206 = "defitem206";
+	public static final String DEFITEM207 = "defitem207";
+	public static final String DEFITEM208 = "defitem208";
+	public static final String DEFITEM209 = "defitem209";
+	public static final String DEFITEM210 = "defitem210";
+
+	public String getDefitem191() {
+		return defitem191;
+	}
+
+	public void setDefitem191(String defitem191) {
+		this.defitem191 = defitem191;
+	}
+
+	public String getDefitem192() {
+		return defitem192;
+	}
+
+	public void setDefitem192(String defitem192) {
+		this.defitem192 = defitem192;
+	}
+
+	public String getDefitem193() {
+		return defitem193;
+	}
+
+	public void setDefitem193(String defitem193) {
+		this.defitem193 = defitem193;
+	}
+
+	public String getDefitem194() {
+		return defitem194;
+	}
+
+	public void setDefitem194(String defitem194) {
+		this.defitem194 = defitem194;
+	}
+
+	public String getDefitem195() {
+		return defitem195;
+	}
+
+	public void setDefitem195(String defitem195) {
+		this.defitem195 = defitem195;
+	}
+
+	public String getDefitem196() {
+		return defitem196;
+	}
+
+	public void setDefitem196(String defitem196) {
+		this.defitem196 = defitem196;
+	}
+
+	public String getDefitem197() {
+		return defitem197;
+	}
+
+	public void setDefitem197(String defitem197) {
+		this.defitem197 = defitem197;
+	}
+
+	public String getDefitem198() {
+		return defitem198;
+	}
+
+	public void setDefitem198(String defitem198) {
+		this.defitem198 = defitem198;
+	}
+
+	public String getDefitem199() {
+		return defitem199;
+	}
+
+	public void setDefitem199(String defitem199) {
+		this.defitem199 = defitem199;
+	}
+
+	public String getDefitem200() {
+		return defitem200;
+	}
+
+	public void setDefitem200(String defitem200) {
+		this.defitem200 = defitem200;
+	}
+
+	public String getDefitem201() {
+		return defitem201;
+	}
+
+	public void setDefitem201(String defitem201) {
+		this.defitem201 = defitem201;
+	}
+
+	public String getDefitem202() {
+		return defitem202;
+	}
+
+	public void setDefitem202(String defitem202) {
+		this.defitem202 = defitem202;
+	}
+
+	public String getDefitem203() {
+		return defitem203;
+	}
+
+	public void setDefitem203(String defitem203) {
+		this.defitem203 = defitem203;
+	}
+
+	public String getDefitem204() {
+		return defitem204;
+	}
+
+	public void setDefitem204(String defitem204) {
+		this.defitem204 = defitem204;
+	}
+
+	public String getDefitem205() {
+		return defitem205;
+	}
+
+	public void setDefitem205(String defitem205) {
+		this.defitem205 = defitem205;
+	}
+
+	public String getDefitem206() {
+		return defitem206;
+	}
+
+	public void setDefitem206(String defitem206) {
+		this.defitem206 = defitem206;
+	}
+
+	public String getDefitem207() {
+		return defitem207;
+	}
+
+	public void setDefitem207(String defitem207) {
+		this.defitem207 = defitem207;
+	}
+
+	public String getDefitem208() {
+		return defitem208;
+	}
+
+	public void setDefitem208(String defitem208) {
+		this.defitem208 = defitem208;
+	}
+
+	public String getDefitem209() {
+		return defitem209;
+	}
+
+	public void setDefitem209(String defitem209) {
+		this.defitem209 = defitem209;
+	}
+
+	public String getDefitem210() {
+		return defitem210;
+	}
+
+	public void setDefitem210(String defitem210) {
+		this.defitem210 = defitem210;
+	}
+
 	public String defitem51;
 	public String defitem52;
 	public String defitem53;
@@ -2878,7 +3459,7 @@ public class BXBusItemVO extends SuperVO {
 	public String defitem78;
 	public String defitem79;
 	public String defitem80;
-	
+
 	public String defitem81;
 	public String getDefitem81() {
 		return defitem81;
@@ -3149,6 +3730,427 @@ public class BXBusItemVO extends SuperVO {
 	public String defitem108;
 	public String defitem109;
 	public String defitem110;
+	public String defitem111;
+	public String defitem112;
+	public String defitem113;
+	public String defitem114;
+	public String defitem115;
+	public String defitem116;
+	public String defitem117;
+	public String defitem118;
+	public String defitem119;
+	public String defitem120;
+	public String defitem121;
+	public String defitem122;
+	public String defitem123;
+	public String defitem124;
+	public String defitem125;
+	public String defitem126;
+	public String defitem127;
+	public String defitem128;
+	public String defitem129;
+	public String defitem130;
+	public String defitem131;
+	public String defitem132;
+	public String defitem133;
+	public String defitem134;
+	public String defitem135;
+	public String defitem136;
+	public String defitem137;
+	public String defitem138;
+	public String defitem139;
+	public String defitem140;
+	public String defitem141;
+	public String defitem142;
+	public String defitem143;
+	public String defitem144;
+	public String defitem145;
+	public String defitem146;
+	public String defitem147;
+	public String defitem148;
+	public String defitem149;
+	public String defitem150;
+	public String defitem151;
+	public String defitem152;
+	public String defitem153;
+	public String defitem154;
+	public String defitem155;
+	public String defitem156;
+	public String defitem157;
+	public String defitem158;
+	public String defitem159;
+	public String defitem160;
+	public String defitem161;
+	public String defitem162;
+	public String defitem163;
+	public String defitem164;
+	public String defitem165;
+	public String defitem166;
+	public String defitem167;
+	public String defitem168;
+	public String defitem169;
+	public String defitem170;
+	public String defitem171;
+	public String defitem172;
+	public String defitem173;
+	public String defitem174;
+	public String defitem175;
+	public String defitem176;
+	public String defitem177;
+	public String defitem178;
+	public String defitem179;
+	public String defitem180;
+	public String defitem181;
+	public String defitem182;
+	public String defitem183;
+	public String defitem184;
+	public String defitem185;
+	public String defitem186;
+	public String defitem187;
+	public String defitem188;
+	public String defitem189;
+	public String defitem190;
+	public String defitem191;
+	public String defitem192;
+	public String defitem193;
+	public String defitem194;
+	public String defitem195;
+	public String defitem196;
+	public String defitem197;
+	public String defitem198;
+	public String defitem199;
+	public String defitem200;
+	public String defitem201;
+	public String defitem202;
+	public String defitem203;
+	public String defitem204;
+	public String defitem205;
+	public String defitem206;
+	public String defitem207;
+	public String defitem208;
+	public String defitem209;
+	public String defitem210;
+
+
+	public String getDefitem171() {
+		return defitem171;
+	}
+
+	public void setDefitem171(String defitem171) {
+		this.defitem171 = defitem171;
+	}
+
+	public String getDefitem172() {
+		return defitem172;
+	}
+
+	public void setDefitem172(String defitem172) {
+		this.defitem172 = defitem172;
+	}
+
+	public String getDefitem173() {
+		return defitem173;
+	}
+
+	public void setDefitem173(String defitem173) {
+		this.defitem173 = defitem173;
+	}
+
+	public String getDefitem174() {
+		return defitem174;
+	}
+
+	public void setDefitem174(String defitem174) {
+		this.defitem174 = defitem174;
+	}
+
+	public String getDefitem175() {
+		return defitem175;
+	}
+
+	public void setDefitem175(String defitem175) {
+		this.defitem175 = defitem175;
+	}
+
+	public String getDefitem176() {
+		return defitem176;
+	}
+
+	public void setDefitem176(String defitem176) {
+		this.defitem176 = defitem176;
+	}
+
+	public String getDefitem177() {
+		return defitem177;
+	}
+
+	public void setDefitem177(String defitem177) {
+		this.defitem177 = defitem177;
+	}
+
+	public String getDefitem178() {
+		return defitem178;
+	}
+
+	public void setDefitem178(String defitem178) {
+		this.defitem178 = defitem178;
+	}
+
+	public String getDefitem179() {
+		return defitem179;
+	}
+
+	public void setDefitem179(String defitem179) {
+		this.defitem179 = defitem179;
+	}
+
+	public String getDefitem180() {
+		return defitem180;
+	}
+
+	public void setDefitem180(String defitem180) {
+		this.defitem180 = defitem180;
+	}
+
+	public String getDefitem181() {
+		return defitem181;
+	}
+
+	public void setDefitem181(String defitem181) {
+		this.defitem181 = defitem181;
+	}
+
+	public String getDefitem182() {
+		return defitem182;
+	}
+
+	public void setDefitem182(String defitem182) {
+		this.defitem182 = defitem182;
+	}
+
+	public String getDefitem183() {
+		return defitem183;
+	}
+
+	public void setDefitem183(String defitem183) {
+		this.defitem183 = defitem183;
+	}
+
+	public String getDefitem184() {
+		return defitem184;
+	}
+
+	public void setDefitem184(String defitem184) {
+		this.defitem184 = defitem184;
+	}
+
+	public String getDefitem185() {
+		return defitem185;
+	}
+
+	public void setDefitem185(String defitem185) {
+		this.defitem185 = defitem185;
+	}
+
+	public String getDefitem186() {
+		return defitem186;
+	}
+
+	public void setDefitem186(String defitem186) {
+		this.defitem186 = defitem186;
+	}
+
+	public String getDefitem187() {
+		return defitem187;
+	}
+
+	public void setDefitem187(String defitem187) {
+		this.defitem187 = defitem187;
+	}
+
+	public String getDefitem188() {
+		return defitem188;
+	}
+
+	public void setDefitem188(String defitem188) {
+		this.defitem188 = defitem188;
+	}
+
+	public String getDefitem189() {
+		return defitem189;
+	}
+
+	public void setDefitem189(String defitem189) {
+		this.defitem189 = defitem189;
+	}
+
+	public String getDefitem190() {
+		return defitem190;
+	}
+
+	public void setDefitem190(String defitem190) {
+		this.defitem190 = defitem190;
+	}
+
+	public String getDefitem111() {
+		return defitem111;
+	}
+
+	public void setDefitem111(String defitem111) {
+		this.defitem111 = defitem111;
+	}
+
+	public String getDefitem112() {
+		return defitem112;
+	}
+
+	public void setDefitem112(String defitem112) {
+		this.defitem112 = defitem112;
+	}
+
+	public String getDefitem113() {
+		return defitem113;
+	}
+
+	public void setDefitem113(String defitem113) {
+		this.defitem113 = defitem113;
+	}
+
+	public String getDefitem114() {
+		return defitem114;
+	}
+
+	public void setDefitem114(String defitem114) {
+		this.defitem114 = defitem114;
+	}
+
+	public String getDefitem115() {
+		return defitem115;
+	}
+
+	public void setDefitem115(String defitem115) {
+		this.defitem115 = defitem115;
+	}
+
+	public String getDefitem116() {
+		return defitem116;
+	}
+
+	public void setDefitem116(String defitem116) {
+		this.defitem116 = defitem116;
+	}
+
+	public String getDefitem117() {
+		return defitem117;
+	}
+
+	public void setDefitem117(String defitem117) {
+		this.defitem117 = defitem117;
+	}
+
+	public String getDefitem118() {
+		return defitem118;
+	}
+
+	public void setDefitem118(String defitem118) {
+		this.defitem118 = defitem118;
+	}
+
+	public String getDefitem119() {
+		return defitem119;
+	}
+
+	public void setDefitem119(String defitem119) {
+		this.defitem119 = defitem119;
+	}
+
+	public String getDefitem120() {
+		return defitem120;
+	}
+
+	public void setDefitem120(String defitem120) {
+		this.defitem120 = defitem120;
+	}
+
+	public String getDefitem121() {
+		return defitem121;
+	}
+
+	public void setDefitem121(String defitem121) {
+		this.defitem121 = defitem121;
+	}
+
+	public String getDefitem122() {
+		return defitem122;
+	}
+
+	public void setDefitem122(String defitem122) {
+		this.defitem122 = defitem122;
+	}
+
+	public String getDefitem123() {
+		return defitem123;
+	}
+
+	public void setDefitem123(String defitem123) {
+		this.defitem123 = defitem123;
+	}
+
+	public String getDefitem124() {
+		return defitem124;
+	}
+
+	public void setDefitem124(String defitem124) {
+		this.defitem124 = defitem124;
+	}
+
+	public String getDefitem125() {
+		return defitem125;
+	}
+
+	public void setDefitem125(String defitem125) {
+		this.defitem125 = defitem125;
+	}
+
+	public String getDefitem126() {
+		return defitem126;
+	}
+
+	public void setDefitem126(String defitem126) {
+		this.defitem126 = defitem126;
+	}
+
+	public String getDefitem127() {
+		return defitem127;
+	}
+
+	public void setDefitem127(String defitem127) {
+		this.defitem127 = defitem127;
+	}
+
+	public String getDefitem128() {
+		return defitem128;
+	}
+
+	public void setDefitem128(String defitem128) {
+		this.defitem128 = defitem128;
+	}
+
+	public String getDefitem129() {
+		return defitem129;
+	}
+
+	public void setDefitem129(String defitem129) {
+		this.defitem129 = defitem129;
+	}
+
+	public String getDefitem130() {
+		return defitem130;
+	}
+
+	public void setDefitem130(String defitem130) {
+		this.defitem130 = defitem130;
+	}
 
 	public String getDefitem51() {
 		return defitem51;
@@ -3389,5 +4391,5 @@ public class BXBusItemVO extends SuperVO {
 	public void setDefitem80(String defitem80) {
 		this.defitem80 = defitem80;
 	}
-	
+
 }
