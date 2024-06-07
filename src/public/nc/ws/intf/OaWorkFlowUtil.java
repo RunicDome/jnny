@@ -46,7 +46,7 @@ import uap.pub.fs.client.FileStorageClient;
 import weaver.rsa.security.RSA;
 
 import com.tchzt.tims.webservice.ContentInfoServiceSoapBindingStub;
-import com.tchzt.tims.webservice.ContentInfoService_ServiceLocator;
+
 
 @SuppressWarnings({ "restriction", "unused", "rawtypes" })
 public class OaWorkFlowUtil {
@@ -190,9 +190,9 @@ public class OaWorkFlowUtil {
 
 	/**
 	 * 获取附件列表
-	 * 
-	 * @param list
-	 * @param pk_bill
+	 *
+	 * @param headData
+	 * @param workFlowBill
 	 */
 	@SuppressWarnings("deprecation")
 	private static void getFiles(JSONArray headData, WorkFlowBill workFlowBill)
@@ -264,7 +264,7 @@ public class OaWorkFlowUtil {
 
 	/**
 	 * 获取影像附件
-	 * 
+	 *
 	 * @param list
 	 * @param pk_bill
 	 * @throws BusinessException
@@ -391,7 +391,7 @@ public class OaWorkFlowUtil {
 
 	/**
 	 * 注册
-	 * 
+	 *
 	 * @return
 	 */
 	@SuppressWarnings("static-access")
@@ -411,7 +411,7 @@ public class OaWorkFlowUtil {
 
 	/**
 	 * 获取token
-	 * 
+	 *
 	 * @param secrit
 	 * @param spk
 	 * @return
@@ -477,7 +477,7 @@ public class OaWorkFlowUtil {
 
 	/**
 	 * 将javabean转成List<Map<String, Object>>
-	 * 
+	 *
 	 * @param obj
 	 * @return
 	 */
@@ -619,7 +619,7 @@ public class OaWorkFlowUtil {
 		return workFlowBill;
 	}
 
-	private static String getDef2(String pk_org) throws BusinessException {
+	public static String getDef2(String pk_org) throws BusinessException {
 		String def2 = "";
 		OrgVO orgVO = (OrgVO) new HYPubBO().queryByPrimaryKey(OrgVO.class,
 				pk_org);

@@ -54,11 +54,6 @@ public class N_36FI_SAVE extends AbstractPfAction<AggHandlingFeesReceiptVO> {
                 if ("4".equals(getDef2(hvo.getPk_org()))) {
                     OAFlowVO oaVo = OaWorkFlowUtil.getOAFlowInfo(hvo.getPk_org(),
                             pkBilltypecode);
-                    /*
-                     * if (oaVo.getIsdr() != 0) { // OA配置信息不可用 throw new
-                     * BusinessException("RL_GHOAWORK表查询OA表名和ID出错，信息未启用，请先启用！辅助信息："
-                     * + "所属组织-->" + hvo.getPk_org()+ ", 单据类型-->" + BILLTYPE); }
-                     */
                     if (oaVo != null && oaVo.getIsdr() == 0) {
                         WorkFId = oaVo.getFlowid();
                         TableName = oaVo.getTablename();
@@ -75,9 +70,9 @@ public class N_36FI_SAVE extends AbstractPfAction<AggHandlingFeesReceiptVO> {
                         workFlowVO.setCreator(hvo.getCreator());
                         workFlowVO.setBillCode(pkBilltypecode);
                         // 接口获取oa流程ID
-//                        workFlowVO.setWorkflowId(OaWorkFlowUtil
-//                                .getOAFlowID(WorkFId));
-                        workFlowVO.setWorkflowId(WorkFId);
+                        workFlowVO.setWorkflowId(OaWorkFlowUtil
+                                .getOAFlowID(WorkFId));
+//                        workFlowVO.setWorkflowId(WorkFId);
                         workFlowVO.setWorkflowName(oaVo.getBilltypename());
                         WorkFlowBill bill = OaWorkFlowUtil
                                 .getWorkFlowBill(workFlowVO);
@@ -114,9 +109,9 @@ public class N_36FI_SAVE extends AbstractPfAction<AggHandlingFeesReceiptVO> {
                         workFlowVO.setCreator(hvo.getCreator());
                         workFlowVO.setBillCode(pkBilltypecode);
                         // 接口获取oa流程ID
-//                        workFlowVO.setWorkflowId(OaWorkFlowUtil
-//                                .getOAFlowID(WorkFId));
-                        workFlowVO.setWorkflowId(WorkFId);
+                        workFlowVO.setWorkflowId(OaWorkFlowUtil
+                                .getOAFlowID(WorkFId));
+//                        workFlowVO.setWorkflowId(WorkFId);
                         workFlowVO.setWorkflowName(oaVo.getBilltypename());
                         WorkFlowBill bill = OaWorkFlowUtil
                                 .getWorkFlowBill(workFlowVO);
