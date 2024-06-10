@@ -1,9 +1,15 @@
 package nc.obm.servlet;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import nc.bs.framework.adaptor.IHttpServletAdaptor;
 import nc.bs.framework.common.InvocationInfoProxy;
 import nc.bs.framework.common.NCLocator;
@@ -15,21 +21,16 @@ import nc.vo.bd.bankaccount.BankAccbasVO;
 import nc.vo.bd.bankdoc.BankdocVO;
 import nc.vo.bd.banktype.BankTypeVO;
 import nc.vo.logging.Debug;
-import nc.vo.org.FinanceOrgVO;
+import nc.vo.org.OrgVO;
 import nc.vo.pub.BusinessException;
-import nc.vo.pub.SuperVO;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 
 // CBS调用接口，获取NC银行列表信息
-@SuppressWarnings({"restriction"})
+@SuppressWarnings({ "restriction" })
 public class BankListForCBSServlet extends HttpServlet implements
         IHttpServletAdaptor {
     private static final long serialVersionUID = 1L;
@@ -84,121 +85,124 @@ public class BankListForCBSServlet extends HttpServlet implements
     private String getBankInfo(JSONObject body) throws BusinessException {
 
         InvocationInfoProxy.getInstance().setGroupId("0001A1100000000001QS");
-        /* 通过传入参数-银行账号获取银行VO数据 */
-        String accountNo = body.getString("accountNo");
-        /*正式删除*/
-        // TODO
-        if(accountNo.equals("240344764425") || accountNo.equals("376150100100003460") || accountNo.equals("8112501013201225507")) {
-            BankAccbasVO bankAccbasVO = getBankVOBywhere(accountNo);
-            /* 返回数据 */
-            return createMsg(toDataJson(bankAccbasVO), "0", "ok");
-        }
-        return createMsg(null, "-1", "查询失败！");
-    }
-    // 查询需推送CBS系统的银行列表单据
-    private BankAccbasVO getBankVOBywhere(String accnum)
-            throws BusinessException {
-        BankAccbasVO[] bankVOs = (BankAccbasVO[]) new HYPubBO().queryByCondition(BankAccbasVO.class,
-                " nvl(dr,0) = 0 and accnum = '" + accnum
-                        + "'");
-        return bankVOs == null ? null : bankVOs[0];
+        BankAccbasVO[] bankAccbasVOs = getBankVOBywhere();
+        /* 返回数据 */
+        return createMsg(toDataJson(bankAccbasVOs), "0", "ok");
     }
 
-    private JSONObject toDataJson(BankAccbasVO yhvo) throws BusinessException {
+    // 查询需推送CBS系统的银行列表单据
+    private BankAccbasVO[] getBankVOBywhere() throws BusinessException {
+        String wheresql = " nvl(dr,0) = 0 and accclass = 2 and enablestate = 2";
+        wheresql += " and accnum in ('240344764425','376150100100003460','8112501013201225507')";
+        BankAccbasVO[] bankVOs = (BankAccbasVO[]) new HYPubBO()
+                .queryByCondition(BankAccbasVO.class, wheresql);
+        return bankVOs;
+    }
+
+    private JSONObject toDataJson(BankAccbasVO[] yhvos)
+            throws BusinessException {
         JSONObject data = new JSONObject();
         data.put("hasNextPage", Boolean.FALSE);
         JSONArray arr = new JSONArray();
-        JSONObject listJson = new JSONObject();
-        /* 银行账号 */
-        listJson.put("accountNo", yhvo.getAccnum());
-        /* 账户名称 */
-        listJson.put("accountName", yhvo.getAccname());
-        /* 币种 */
-        listJson.put("currency", "10");
-        /* 币种名称 */
-        listJson.put("currencyName", "人民币");
-        /* 账户状态 0-正常，1-销户 */
-        listJson.put("accountStatus", "0");
-        /* 开户日期 */
-        listJson.put("openDate", yhvo.getAccopendate().toStdString());
-        /* 银行类别 */
-        BankTypeVO typeVO = (BankTypeVO) new HYPubBO().queryByPrimaryKey(
-                BankTypeVO.class, yhvo.getPk_banktype());
-        listJson.put("bankType", typeVO.getMnecode());
-        /* 银行类别名称 */
-        listJson.put("bankTypeName", typeVO.getName());
-        /* 银行客户号 */
-        listJson.put("bankCustomerNo", yhvo.getCustomernumber());
-        /* 联行号 */
-        listJson.put("cnapsCode", yhvo.getCombinenum());
-        /* 银行号(地区码) */
-        listJson.put("bankNumber", "");
-        /* 开户行省编码 */
-        listJson.put("provinceCode", "");
-        /* 开户行市编码 */
-        listJson.put("cityCode", "");
-        /* 银企直连标志,0-未开通， 9-开通 */
-        String directConnectFlag = "";
-        if (yhvo.getNetqueryflag() == 0) {
-            directConnectFlag = "0";
-        } else if (yhvo.getNetqueryflag() == 1 || yhvo.getNetqueryflag() == 2
-                || yhvo.getNetqueryflag() == 3) {
-            directConnectFlag = "9";
+        for (BankAccbasVO yhvo : yhvos) {
+            JSONObject listJson = new JSONObject();
+            /* 银行账号 */
+            listJson.put("accountNo", yhvo.getAccnum());
+            /* 账户名称 */
+            listJson.put("accountName", yhvo.getAccname());
+            /* 币种 */
+            listJson.put("currency", "10");
+            /* 币种名称 */
+            listJson.put("currencyName", "人民币");
+            /* 账户状态 0-正常，1-销户 */
+            listJson.put("accountStatus", "0");
+            /* 开户日期 */
+            listJson.put("openDate", yhvo.getAccopendate().toStdString());
+            /* 银行类别 */
+            BankTypeVO typeVO = (BankTypeVO) new HYPubBO().queryByPrimaryKey(
+                    BankTypeVO.class, yhvo.getPk_banktype());
+            listJson.put("bankType", typeVO.getMnecode());
+            /* 银行类别名称 */
+            listJson.put("bankTypeName", typeVO.getName());
+            /* 银行客户号 */
+            listJson.put("bankCustomerNo", yhvo.getCustomernumber());
+            /* 联行号 */
+            listJson.put("cnapsCode", yhvo.getCombinenum());
+            /* 银行号(地区码) */
+            listJson.put("bankNumber", "");
+            /* 开户行省编码 */
+            listJson.put("provinceCode", "");
+            /* 开户行市编码 */
+            listJson.put("cityCode", "");
+            /* 银企直连标志,0-未开通， 9-开通 */
+            String directConnectFlag = "";
+            if (yhvo.getNetqueryflag() == 0) {
+                directConnectFlag = "0";
+            } else if (yhvo.getNetqueryflag() == 1
+                    || yhvo.getNetqueryflag() == 2
+                    || yhvo.getNetqueryflag() == 3) {
+                directConnectFlag = "9";
+            }
+            listJson.put("directConnectFlag", directConnectFlag);
+            /* 存款类型列表 */
+            String sqlwhere = "nvl(dr,0) = 0 and pk_bankaccbas = '"
+                    + yhvo.getPrimaryKey() + "'";
+            BankAccSubVO[] zhvos = (BankAccSubVO[]) new HYPubBO()
+                    .queryByCondition(BankAccSubVO.class, sqlwhere);
+            BankAccSubVO zhvo = zhvos[0];// 银行账户1对1银行账户子户
+            String depositType = "";
+            if (zhvo.getAcctype() != null) {
+                if (zhvo.getAcctype() == 0) {
+                    depositType = "A";// 活期
+                } else if (zhvo.getAcctype() == 1) {
+                    depositType = "F";// 定期
+                } else if (zhvo.getAcctype() == 2) {
+                    depositType = "N";// 通知
+                }
+            }
+            if (zhvo.getIsconcerted() != null) {
+                if (zhvo.getIsconcerted().booleanValue()) {
+                    depositType = "C";// 协定
+                }
+            }
+            listJson.put("depositType", depositType);
+            /* 账户性质 */
+            listJson.put("accountNature", "");
+            /* 账户性质名称 */
+            listJson.put("accountNatureName", "");
+            /* 单位编码 */
+            OrgVO orgvo = (OrgVO) new HYPubBO().queryByPrimaryKey(OrgVO.class,
+                    yhvo.getPk_org());
+            listJson.put("unitCode", orgvo.getCode());
+            /* 单位名称 */
+            listJson.put("unitName", orgvo.getName());
+            /* 备注 */
+            listJson.put("accountRemark", "");
+            /* 省名称 */
+            listJson.put("provinceName", yhvo.getProvince());
+            /* 市名称 */
+            listJson.put("CityName", yhvo.getCity());
+            /* 银企直联标志名称 */
+            String directConnectFlagName = "";
+            if (yhvo.getNetqueryflag() == 0) {
+                directConnectFlagName = "未开通";
+            } else if (yhvo.getNetqueryflag() == 1) {
+                directConnectFlagName = "开通查询";
+            } else if (yhvo.getNetqueryflag() == 2) {
+                directConnectFlagName = "开通查询及支付";
+            } else if (yhvo.getNetqueryflag() == 3) {
+                directConnectFlagName = "开通落地支付";
+            }
+            listJson.put("directConnectFlagName", directConnectFlagName);
+            /* 开户银行 */
+            BankdocVO khh = (BankdocVO) new HYPubBO().queryByPrimaryKey(
+                    BankdocVO.class, yhvo.getPk_bankdoc());
+            listJson.put("openBank", khh.getName());
+            arr.add(listJson);
         }
-        listJson.put("directConnectFlag", directConnectFlag);
-        /* 存款类型列表 */
-        String sqlwhere = "nvl(dr,0) = 0 and pk_bankaccbas = '"+yhvo.getPrimaryKey()+"'";
-        BankAccSubVO[] zhvos = (BankAccSubVO[]) new HYPubBO().queryByCondition(BankAccSubVO.class, sqlwhere);
-        BankAccSubVO zhvo =zhvos[0];// 银行账户1对1银行账户子户
-        String depositType = "";
-        if (zhvo.getAcctype() == 0) {
-            depositType = "A";// 活期
-        } else if (zhvo.getAcctype() == 1) {
-            depositType = "F";// 定期
-        } else if (zhvo.getAcctype() == 2) {
-            depositType = "N";// 通知
-        }
-        if (zhvo.getIsconcerted().booleanValue()) {
-            depositType = "C";// 协定
-        }
-        listJson.put("depositType", depositType);
-        /* 账户性质 */
-        listJson.put("accountNature", "");
-        /* 账户性质名称 */
-        listJson.put("accountNatureName", "");
-        /* 单位编码 */
-        FinanceOrgVO orgvo = (FinanceOrgVO) new HYPubBO().queryByPrimaryKey(
-                FinanceOrgVO.class, yhvo.getFinanceorg());
-        listJson.put("unitCode", orgvo.getCode());
-        /* 单位名称 */
-        listJson.put("unitName", orgvo.getName());
-        /* 备注 */
-        listJson.put("accountRemark", "");
-        /* 省名称 */
-        listJson.put("provinceName", yhvo.getProvince());
-        /* 市名称 */
-        listJson.put("CityName", yhvo.getCity());
-        /* 银企直联标志名称 */
-        String directConnectFlagName = "";
-        if (yhvo.getNetqueryflag() == 0) {
-            directConnectFlagName = "未开通";
-        } else if (yhvo.getNetqueryflag() == 1) {
-            directConnectFlagName = "开通查询";
-        } else if (yhvo.getNetqueryflag() == 2) {
-            directConnectFlagName = "开通查询及支付";
-        } else if (yhvo.getNetqueryflag() == 3) {
-            directConnectFlagName = "开通落地支付";
-        }
-        listJson.put("directConnectFlagName", directConnectFlagName);
-        /*开户银行*/
-        BankdocVO khh = (BankdocVO) new HYPubBO().queryByPrimaryKey(
-                BankdocVO.class, yhvo.getPk_bankdoc());
-        listJson.put("openBank", khh.getName());
-
-        arr.add(listJson);
         data.put("list", arr);
         data.put("pageNum", 1);
-        data.put("total", 1);
+        data.put("total", arr.size());
         return data;
     }
 

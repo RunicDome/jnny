@@ -289,11 +289,11 @@ public class PushSupplierImpl implements IPushSupplier {
 	// 查询该物料是否有效
 	public BdMaterialPriceVO ifEffect(String pk_material)
 			throws BusinessException {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
 		// 当前时间
 		String curdate = df.format(new Date());
-		String whereSql = "dr = 0 and status = 0 and effective_start >= '"
-				+ curdate + "' and effective_end <= '" + curdate
+		String whereSql = "dr = 0 and status = 0 and effective_start <= '"
+				+ curdate + "' and effective_end >= '" + curdate
 				+ "' and pk_material = '" + pk_material + "'";
 		BdMaterialPriceVO[] bdMaterialPriceVOs = (BdMaterialPriceVO[]) getHyPubBO()
 				.queryByCondition(BdMaterialPriceVO.class, whereSql);

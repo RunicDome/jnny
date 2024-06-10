@@ -1,9 +1,15 @@
 package nc.obm.servlet;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import nc.bs.framework.adaptor.IHttpServletAdaptor;
 import nc.bs.framework.common.InvocationInfoProxy;
 import nc.bs.framework.common.NCLocator;
@@ -15,20 +21,16 @@ import nc.vo.bd.bankdoc.BankdocVO;
 import nc.vo.bd.banktype.BankTypeVO;
 import nc.vo.logging.Debug;
 import nc.vo.obm.ebankdzd.EbankDzdVO;
-import nc.vo.org.FinanceOrgVO;
+import nc.vo.org.OrgVO;
 import nc.vo.pub.BusinessException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 
 // CBS调用接口，获取NC银行交易明细信息
-@SuppressWarnings({"restriction"})
+@SuppressWarnings({ "restriction" })
 public class BankTransDetailsForCBSServlet extends HttpServlet implements
         IHttpServletAdaptor {
     private static final long serialVersionUID = 1L;
@@ -86,7 +88,7 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
         /* 通过传入参数-银行账号获取银行余额数据 */
         EbankDzdVO[] dzdvos = getEbankDzdVOBywhere(body);
         /* 返回数据 */
-        return createMsg(toDataJson(dzdvos), "0", "ok");
+        return toDataJson(dzdvos, body);
     }
 
     // 查询需推送CBS系统的银行单据
@@ -110,16 +112,28 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
             }
         }
         // TODO正式删除
-        wheresql+= " and curacc = '376150100100003460'";
-        EbankDzdVO[] bankVOs = (EbankDzdVO[]) new HYPubBO().queryByCondition(EbankDzdVO.class,
-                wheresql);
+        wheresql += " and curacc = '376150100100003460'";
+        EbankDzdVO[] bankVOs = (EbankDzdVO[]) new HYPubBO().queryByCondition(
+                EbankDzdVO.class, wheresql);
         return bankVOs;
     }
 
-    private JSONObject toDataJson(EbankDzdVO[] dzdvos) throws BusinessException {
+    private String toDataJson(EbankDzdVO[] dzdvos, JSONObject body)
+            throws BusinessException {
+        if (dzdvos == null || dzdvos.length <= 0) {
+            return createMsg(null, "-1", "false");
+        }
+        int currentPage = body.getIntValue("currentPage");
+        int pageSize = body.getIntValue("pageSize");
+        if (dzdvos.length <= pageSize) {
+            pageSize = dzdvos.length;
+        }
+        EbankDzdVO[] needVOs = new EbankDzdVO[pageSize];
+        int startIndex = (currentPage - 1) * pageSize;
+        System.arraycopy(dzdvos, startIndex, needVOs, 0, needVOs.length);
         JSONObject data = new JSONObject();
         JSONArray arr = new JSONArray();
-        for (EbankDzdVO dzdvo : dzdvos) {
+        for (EbankDzdVO dzdvo : needVOs) {
             BankAccbasVO yhvo = getBankVOBywhere(dzdvo.getCuracc());
             // BankAccSubVO zhvo = yhvo.getBankaccsub()[0];// 银行账户1对1银行账户子户
             // data.put("endRow", 1);
@@ -136,12 +150,13 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
             BankTypeVO typeVO = (BankTypeVO) new HYPubBO().queryByPrimaryKey(
                     BankTypeVO.class, yhvo.getPk_banktype());
             listJson.put("bankType", typeVO.getMnecode());
-            /*开户银行*/
+            /* 开户银行 */
             BankdocVO khh = (BankdocVO) new HYPubBO().queryByPrimaryKey(
                     BankdocVO.class, yhvo.getPk_bankdoc());
             listJson.put("openBank", khh.getName());
             /* 交易日期 */
-            listJson.put("bankTransactionDate", dzdvo.getTrans_date().toStdString());
+            listJson.put("bankTransactionDate", dzdvo.getTrans_date()
+                    .toStdString());
             /* 交易流水号 */
             listJson.put("transactionSerialNumber", dzdvo.getTxseqid());
             /* 币种 */
@@ -149,19 +164,20 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
             /* 币种名称 */
             listJson.put("currencyName", "人民币");
 
-            /*付款->贷，1-借;2-贷*/
-            if (dzdvo.getDbtrsamt().toDouble() > 0) {
+            /* 付款->贷，1-借;2-贷 */
+            if (dzdvo.getDbtrsamt() != null
+                    && dzdvo.getDbtrsamt().toDouble() > 0) {
                 listJson.put("loanType", "2");
-                /*发生额*/
+                /* 发生额 */
                 listJson.put("incurredAmount", dzdvo.getDbtrsamt().toDouble());
-                /*交易后余额*/
-                listJson.put("accountBalance", dzdvo.getCrtbalance().toDouble());
+                /* 交易后余额 */
+                listJson.put("accountBalance", dzdvo.getDbtbalance().toDouble());
             } else {
                 listJson.put("loanType", "1");
-                /*发生额*/
+                /* 发生额 */
                 listJson.put("loanType", dzdvo.getCrtrsamt().toDouble());
-                /*交易后余额*/
-                listJson.put("accountBalance", dzdvo.getDbtbalance().toDouble());
+                /* 交易后余额 */
+                listJson.put("accountBalance", dzdvo.getCrtbalance().toDouble());
             }
             /* 用途 */
             listJson.put("purpose", dzdvo.getNusage());
@@ -175,9 +191,8 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
             listJson.put("accountStatus", "0");
 
             /* 单位编码 */
-            FinanceOrgVO orgvo = (FinanceOrgVO) new HYPubBO()
-                    .queryByPrimaryKey(FinanceOrgVO.class,
-                            dzdvo.getBankaccorg());
+            OrgVO orgvo = (OrgVO) new HYPubBO().queryByPrimaryKey(OrgVO.class,
+                    yhvo.getPk_org());
             listJson.put("unitCode", orgvo.getCode());
             /* 单位名称 */
             listJson.put("unitName", orgvo.getName());
@@ -188,25 +203,25 @@ public class BankTransDetailsForCBSServlet extends HttpServlet implements
             // JSONArray navigatepageNumsArr = new JSONArray();
             // navigatepageNumsArr.add(1);
             // data.put("navigatepageNums", navigatepageNumsArr);
-            // data.put("nextPage", 0);
-            // data.put("pageNum", 1);
-            // data.put("pageSize", 20);
-            // data.put("pages", 1);
-            // data.put("prePage", 0);
-            // data.put("size", 1);
-            // data.put("startRow", 1);
-            // data.put("total", 1);
+            data.put("nextPage", currentPage + 1);
+            data.put("pageNum", currentPage);
+            data.put("pageSize", pageSize);
+            data.put("pages", (dzdvos.length + pageSize - 1) / pageSize);
+            data.put("prePage", currentPage - 1);
+            data.put("size", pageSize);
+            data.put("startRow", startIndex + 1);
+            data.put("total", dzdvos.length);
         }
         data.put("list", arr);
-        return data;
+        return createMsg(data, "0", "ok");
     }
 
     // 查询需推送CBS系统的银行单据
     private BankAccbasVO getBankVOBywhere(String accnum)
             throws BusinessException {
-        BankAccbasVO[] bankVOs = (BankAccbasVO[]) new HYPubBO().queryByCondition(BankAccbasVO.class,
-                " nvl(dr,0) = 0 and accnum = '" + accnum
-                        + "'");
+        BankAccbasVO[] bankVOs = (BankAccbasVO[]) new HYPubBO()
+                .queryByCondition(BankAccbasVO.class,
+                        " nvl(dr,0) = 0 and accnum = '" + accnum + "'");
         return bankVOs == null ? null : bankVOs[0];
     }
 
